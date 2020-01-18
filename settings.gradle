@@ -1,0 +1,5 @@
+rootProject.name = 'ByteSectors'
+include 'System'
+include 'Commons'
+include 'Client'
+

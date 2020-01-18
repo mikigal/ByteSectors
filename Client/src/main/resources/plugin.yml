@@ -1,0 +1,3 @@
+name: ByteSectorsClient
+version: 1.0
+main: pl.mikigal.bytesectors.client.ByteSectorsClient

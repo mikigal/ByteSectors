@@ -1,0 +1,49 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:5.1.0'
+    }
+}
+
+apply plugin: 'com.github.johnrengelman.shadow'
+
+shadowJar {
+    relocate('io.netty', 'pl.mikigal.bytesectors.netty')
+}
+
+jar.dependsOn shadowJar
+
+repositories {
+    mavenCentral()
+
+    maven {
+        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+    }
+    maven {
+        url = "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
+}
+
+dependencies {
+    compile project(':Commons')
+    compileOnly group: 'org.spigotmc', name: 'spigot-api', version: '1.8.8-R0.1-SNAPSHOT'
+    //implementation files('/Users/mikigal/Documents/Programowanie/Java/ByteSectors/Servers/First/PaperSpigot-1.8.8-R0.1-SNAPSHOT-latest.jar')
+
+}
+
+tasks.withType(Jar) {
+    destinationDir = file("/Users/mikigal/Documents/Programowanie/Java/ByteSectors/Servers/First/plugins")
+}
+
+task deleteJar(type: Delete) {
+    delete '/Users/mikigal/Documents/Programowanie/Java/ByteSectors/Servers/First/plugins/Client-1.0-SNAPSHOT-all.jar'
+    delete '/Users/mikigal/Documents/Programowanie/Java/ByteSectors/Servers/Second/plugins/Client-1.0-SNAPSHOT-all.jar'
+}
+
+task copyJar(type: Copy) {
+    from '/Users/mikigal/Documents/Programowanie/Java/ByteSectors/Servers/First/plugins/Client-1.0-SNAPSHOT-all.jar'
+    into "/Users/mikigal/Documents/Programowanie/Java/ByteSectors/Servers/Second/plugins"
+}

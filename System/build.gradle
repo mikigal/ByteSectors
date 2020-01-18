@@ -1,0 +1,16 @@
+repositories {
+    mavenCentral()
+
+    maven {
+        url = "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
+}
+
+dependencies {
+    compile project(':Commons')
+    compileOnly group: 'net.md-5', name: 'bungeecord-api', version: '1.12-SNAPSHOT'
+}
+
+tasks.withType(Jar) {
+    destinationDir = file("/Users/mikigal/Documents/Programowanie/Java/ByteSectors/Servers/Proxy/plugins")
+}
