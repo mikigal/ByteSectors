@@ -17,6 +17,11 @@ public class PacketConfigurationListener extends RedisListener<PacketConfigurati
     public void onMessage(PacketConfiguration packet) {
         SectorManager.loadSectors(packet.getSectors());
         SystemConfigurationSynchronization.getConfigurationWaitLatch().countDown();
+
+        Configuration.setOutOfBorderMessage(Utils.fixColors(packet.getOutOfBorderMessage()));
+        Configuration.setSectorOfflineMessage(Utils.fixColors(packet.getSectorOfflineMessage()));
+        Configuration.setNearBorderActionBar(Utils.fixColors(packet.getNearBorderActionBar()));
+        Configuration.setNearSectorActionBar(Utils.fixColors(packet.getNearSectorActionBar()));
         Utils.log("Received configuration from System! Loaded &4" + packet.getSectors().length + "&c sectors!");
     }
 }

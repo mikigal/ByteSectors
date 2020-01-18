@@ -5,6 +5,7 @@ import pl.mikigal.bytesectors.commons.data.SectorManager;
 import pl.mikigal.bytesectors.commons.packet.configuration.PacketConfiguration;
 import pl.mikigal.bytesectors.commons.packet.configuration.PacketConfigurationRequest;
 import pl.mikigal.bytesectors.commons.redis.RedisListener;
+import pl.mikigal.bytesectors.system.configuration.SectorsConfiguration;
 import pl.mikigal.bytesectors.system.utils.Utils;
 
 public class PacketConfigurationRequestListener extends RedisListener<PacketConfigurationRequest> {
@@ -15,7 +16,14 @@ public class PacketConfigurationRequestListener extends RedisListener<PacketConf
 
     @Override
     public void onMessage(PacketConfigurationRequest packet) {
-        PacketConfiguration response = new PacketConfiguration(SectorManager.getProxyChannel(), SectorManager.getSectors().toArray(new Sector[0]));
+        PacketConfiguration response = new PacketConfiguration(
+                SectorManager.getProxyChannel(),
+                SectorManager.getSectors().toArray(new Sector[0]),
+                SectorsConfiguration.getOutOfBorderMessage(),
+                SectorsConfiguration.getSectorOfflineMessage(),
+                SectorsConfiguration.getNearBorderActionBar(),
+                SectorsConfiguration.getNearSectorActionBar());
+
         response.sendResponse(packet);
         Utils.log("Received configuration request from sector &4" + packet.getSender() + "&c!");
     }

@@ -11,6 +11,12 @@ public class SectorsConfiguration {
     private static int redisPort;
     private static String redisPassword;
 
+    private static String outOfBorderMessage;
+    private static String sectorOfflineMessage;
+
+    private static String nearBorderActionBar;
+    private static String nearSectorActionBar;
+
     private static void load(Configuration config) {
         for (String key : config.getSection("sectors").getKeys()) {
             net.md_5.bungee.config.Configuration sectorSection = config.getSection("sectors." + key);
@@ -28,5 +34,21 @@ public class SectorsConfiguration {
 
     public static String getRedisPassword() {
         return redisPassword;
+    }
+
+    public static String getOutOfBorderMessage() {
+        return outOfBorderMessage;
+    }
+
+    public static String getSectorOfflineMessage() {
+        return sectorOfflineMessage;
+    }
+
+    public static String getNearBorderActionBar() {
+        return nearBorderActionBar;
+    }
+
+    public static String getNearSectorActionBar() {
+        return nearSectorActionBar;
     }
 }

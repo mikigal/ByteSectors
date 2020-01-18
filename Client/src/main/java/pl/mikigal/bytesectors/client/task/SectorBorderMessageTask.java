@@ -22,11 +22,15 @@ public class SectorBorderMessageTask implements Runnable {
 
             Sector nearestSector = sector.getNearestSector(distance, location.getBlockX(), location.getBlockZ(), location.getWorld().getName());
             if (nearestSector == null) {
-                ActionBarAPI.sendActionBar(player, "&c&lZblizasz sie do granicy mapy (" + distance + "m)");
+                ActionBarAPI.sendActionBar(player, Configuration.getNearBorderActionBar().replace("{DISTANCE}", String.valueOf(distance)));
                 continue;
             }
 
-            ActionBarAPI.sendActionBar(player, "&c&lSektor " + nearestSector.getId() + " (" + distance + "m) [" + nearestSector.getPerformance() + " TPS]");
+            ActionBarAPI.sendActionBar(player, Configuration.getNearSectorActionBar()
+                    .replace("{ID}", sector.getId())
+                    .replace("{DISTANCE}", String.valueOf(distance))
+                    .replace("{PERFORMANCE}", sector.getPerformance() + (sector.isOffline() ? "" : " TPS"))
+                    .replace("{ONLINE}", String.valueOf(sector.getOnline())));
         }
     }
 }

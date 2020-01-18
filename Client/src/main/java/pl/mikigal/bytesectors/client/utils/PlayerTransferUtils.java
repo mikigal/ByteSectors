@@ -106,7 +106,7 @@ public class PlayerTransferUtils {
 
         if (newSector == null) {
             player.teleport(location);
-            Utils.sendMessage(player, "&cWyszedles poza border mapy!");
+            Utils.sendMessage(player, Configuration.getOutOfBorderMessage());
 
             if (event instanceof Cancellable) {
                 Cancellable cancellable = (Cancellable) event;

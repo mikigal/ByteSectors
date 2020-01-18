@@ -13,6 +13,7 @@ public class Sector implements Serializable {
     private LocationSerializable minimum;
     private LocationSerializable maximum;
     private String performance;
+    private int online;
     private long lastPerformancePacket;
 
     public Sector(String id, int minX, int maxX, int minZ, int maxZ, String world) {
@@ -20,6 +21,7 @@ public class Sector implements Serializable {
         this.minimum = new LocationSerializable(minX, minZ, world);
         this.maximum = new LocationSerializable(maxX, maxZ, world);
         this.performance = "OFFLINE";
+        this.online = 0;
         this.lastPerformancePacket = -1;
     }
 
@@ -94,5 +96,17 @@ public class Sector implements Serializable {
 
     public void setLastPerformancePacket(long lastPerformancePacket) {
         this.lastPerformancePacket = lastPerformancePacket;
+    }
+
+    public int getOnline() {
+        return online;
+    }
+
+    public void setOnline(int online) {
+        this.online = online;
+    }
+
+    public boolean isOffline() {
+        return this.performance.equals("OFFLINE");
     }
 }

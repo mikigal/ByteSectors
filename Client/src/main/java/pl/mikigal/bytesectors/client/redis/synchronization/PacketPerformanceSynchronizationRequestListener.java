@@ -1,5 +1,6 @@
 package pl.mikigal.bytesectors.client.redis.synchronization;
 
+import org.bukkit.Bukkit;
 import pl.mikigal.bytesectors.client.Configuration;
 import pl.mikigal.bytesectors.client.utils.PerformanceUtils;
 import pl.mikigal.bytesectors.commons.data.SectorManager;
@@ -21,6 +22,6 @@ public class PacketPerformanceSynchronizationRequestListener extends RedisListen
 
         String performance = PerformanceUtils.getTps();
         SectorManager.getSector(Configuration.getSectorId()).setPerformance(performance);
-        new PacketPerformanceSynchronization(Configuration.getSectorId(), performance).send(SectorManager.getClientChannel());
+        new PacketPerformanceSynchronization(Configuration.getSectorId(), performance, Bukkit.getOnlinePlayers().size()).send(SectorManager.getClientChannel());
     }
 }

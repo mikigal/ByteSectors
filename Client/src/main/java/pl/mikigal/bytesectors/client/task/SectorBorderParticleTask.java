@@ -22,7 +22,7 @@ public class SectorBorderParticleTask implements Runnable {
             }
 
             for (Location loc : BlockUtils.sphere(location, 8, 0, false, true, 1)) {
-                if ((loc.getBlockX() == sector.getMinimum().getX() || loc.getBlockX() == sector.getMaximum().getX() ||
+                if (loc != null && (loc.getBlockX() == sector.getMinimum().getX() || loc.getBlockX() == sector.getMaximum().getX() ||
                         loc.getBlockZ() == sector.getMinimum().getZ() || loc.getBlockZ() == sector.getMaximum().getZ()) &&
                         (loc.getBlock() == null || loc.getBlock().getType() == Material.AIR)) {
 

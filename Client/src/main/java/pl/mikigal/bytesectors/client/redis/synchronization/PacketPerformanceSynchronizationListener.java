@@ -13,5 +13,6 @@ public class PacketPerformanceSynchronizationListener extends RedisListener<Pack
     @Override
     public void onMessage(PacketPerformanceSynchronization packet) {
         SectorManager.getSector(packet.getSender()).setPerformance(packet.getPerformance());
+        SectorManager.getSector(packet.getSender()).setOnline(packet.getOnline());
     }
 }
