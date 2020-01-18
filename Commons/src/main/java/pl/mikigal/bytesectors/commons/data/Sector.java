@@ -46,7 +46,7 @@ public class Sector implements Serializable {
                 z <= maximum.getZ();
     }
 
-    public int getDistanceToBorder(int x, int z) { // TODO: 16/01/2020 World
+    public int getDistanceToBorder(int x, int z) {
         double x1 = Math.abs(x - this.minimum.getX());
         double x2 = Math.abs(x - this.maximum.getX());
         double z1 = Math.abs(z - this.minimum.getZ());

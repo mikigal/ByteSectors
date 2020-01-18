@@ -1,1 +1,5 @@
-sector_id: "first"
+sectorId: "first"
+
+redisHost: "localhost"
+redisPort: 6379
+redisPassword: "zaq1@WSX"

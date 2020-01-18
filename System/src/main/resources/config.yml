@@ -1,4 +1,7 @@
 # CONFIG
+redisHost: "localhost"
+redisPort: 6379
+redisPassword: "zaq1@WSX"
 
 sectors:
   first: # Server name from BungeeCord config

@@ -1,9 +1,11 @@
-package pl.mikigal.bytesectors.system;
+package pl.mikigal.bytesectors.system.configuration;
 
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 import pl.mikigal.bytesectors.commons.data.SectorManager;
+import pl.mikigal.bytesectors.system.ByteSectorsSystem;
+import pl.mikigal.bytesectors.system.utils.Utils;
 
 import java.io.*;
 
@@ -35,27 +37,23 @@ public class ConfigurationManager {
         }
     }
 
-    private static void load() {
-        File config = new File(ByteSectorsSystem.getInstance().getDataFolder().getPath() + File.separator + "config.yml");
-        if (!config.exists()) {
-            return;
-        }
-
+    private static Configuration load() {
         try {
-            Configuration configuration = ConfigurationProvider.getProvider(YamlConfiguration.class).load(config);
-
-            for (String key : configuration.getSection("sectors").getKeys()) {
-                Configuration sectorSection = configuration.getSection("sectors." + key);
-                SectorManager.createSector(key, sectorSection.getInt("min_x"), sectorSection.getInt("max_x"), sectorSection.getInt("min_z"), sectorSection.getInt("max_z"), sectorSection.getString("world"));
+            File config = new File(ByteSectorsSystem.getInstance().getDataFolder().getPath() + File.separator + "config.yml");
+            if (!config.exists()) {
+                return null;
             }
 
+            return ConfigurationProvider.getProvider(YamlConfiguration.class).load(config);
         } catch (IOException e) {
-            e.printStackTrace();
+            Utils.log(e);
         }
+
+        return null;
     }
 
-    public static void loadConfig() {
+    public static Configuration initConfig() {
         saveDefaultConfig();
-        load();
+        return load();
     }
 }
