@@ -1,23 +1,25 @@
 package pl.mikigal.bytesectors.client;
 
 import org.bukkit.plugin.java.JavaPlugin;
-import pl.mikigal.bytesectors.commons.configuration.ConfigAPI;
 import pl.mikigal.bytesectors.client.listener.PlayerJoinListener;
 import pl.mikigal.bytesectors.client.listener.PlayerMoveListener;
+import pl.mikigal.bytesectors.client.listener.PlayerPortalListener;
+import pl.mikigal.bytesectors.client.listener.PlayerTeleportListener;
 import pl.mikigal.bytesectors.client.redis.PacketConfigurationListener;
 import pl.mikigal.bytesectors.client.redis.PacketPlayerTransferListener;
 import pl.mikigal.bytesectors.client.redis.synchronization.PacketPerformanceSynchronizationListener;
 import pl.mikigal.bytesectors.client.redis.synchronization.PacketPerformanceSynchronizationRequestListener;
 import pl.mikigal.bytesectors.client.redis.synchronization.PacketTimeSynchronizationListener;
 import pl.mikigal.bytesectors.client.redis.synchronization.PacketWeatherSynchronizationListener;
-import pl.mikigal.bytesectors.client.synchronization.SystemConfigurationSynchronization;
 import pl.mikigal.bytesectors.client.synchronization.ClientPerformanceOfflineSynchronization;
 import pl.mikigal.bytesectors.client.synchronization.ClientPerformanceSynchronization;
+import pl.mikigal.bytesectors.client.synchronization.SystemConfigurationSynchronization;
 import pl.mikigal.bytesectors.client.task.SectorBorderMessageTask;
 import pl.mikigal.bytesectors.client.task.SectorBorderParticleTask;
 import pl.mikigal.bytesectors.client.utils.RegisterUtils;
 import pl.mikigal.bytesectors.client.utils.Utils;
 import pl.mikigal.bytesectors.commons.ByteSectorsCommons;
+import pl.mikigal.bytesectors.commons.configuration.ConfigAPI;
 import pl.mikigal.bytesectors.commons.data.SectorManager;
 import pl.mikigal.bytesectors.commons.packet.configuration.PacketConfigurationRequest;
 import pl.mikigal.bytesectors.commons.packet.synchronization.PacketPerformanceSynchronizationRequest;
@@ -63,7 +65,7 @@ public class ByteSectorsClient extends JavaPlugin {
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
         Utils.log("Registering listeners...");
-        RegisterUtils.registerListeners(new PlayerMoveListener(), new PlayerJoinListener());
+        RegisterUtils.registerListeners(new PlayerMoveListener(), new PlayerJoinListener(), new PlayerPortalListener(), new PlayerTeleportListener());
 
         Utils.log("Registering synchronization tasks...");
         this.getServer().getScheduler().runTaskTimerAsynchronously(this, new ClientPerformanceSynchronization(), 60, 60);

@@ -8,12 +8,17 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
 import pl.mikigal.bytesectors.client.ByteSectorsClient;
 import pl.mikigal.bytesectors.client.Configuration;
 import pl.mikigal.bytesectors.commons.data.Sector;
+import pl.mikigal.bytesectors.commons.data.SectorManager;
 import pl.mikigal.bytesectors.commons.packet.PacketPlayerTransfer;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public class PlayerTransferUtils {
@@ -92,6 +97,28 @@ public class PlayerTransferUtils {
         }
 
         transferQueue.put(packet.getUniqueId(), future);
+    }
+
+    public static void handlePlayerMove(Player player, Location to, Event event) {
+        Location location = player.getLocation();
+        Sector currentSector = SectorManager.getSector(location.getBlockX(), location.getBlockZ(), location.getWorld().getName());
+        Sector newSector = SectorManager.getSector(to.getBlockX(), to.getBlockZ(), to.getWorld().getName());
+
+        if (newSector == null) {
+            player.teleport(location);
+            Utils.sendMessage(player, "&cWyszedles poza border mapy!");
+
+            if (event instanceof Cancellable) {
+                Cancellable cancellable = (Cancellable) event;
+                cancellable.setCancelled(true);
+            }
+            return;
+        }
+
+        if (!currentSector.equals(newSector)) {
+            player.teleport(location);
+            PlayerTransferUtils.transfer(player, to, newSector);
+        }
     }
 
     private static void connectToSector(Player player, Sector sector) {
