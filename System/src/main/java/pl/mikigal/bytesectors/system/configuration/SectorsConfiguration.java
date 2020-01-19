@@ -2,7 +2,9 @@ package pl.mikigal.bytesectors.system.configuration;
 
 import net.md_5.bungee.config.Configuration;
 import pl.mikigal.bytesectors.commons.configuration.ConfigEntry;
+import pl.mikigal.bytesectors.commons.data.Sector;
 import pl.mikigal.bytesectors.commons.data.SectorManager;
+import pl.mikigal.bytesectors.system.utils.Utils;
 
 @ConfigEntry
 public class SectorsConfiguration {
@@ -24,8 +26,20 @@ public class SectorsConfiguration {
     private static void load(Configuration config) {
         for (String key : config.getSection("sectors").getKeys()) {
             Configuration sectorSection = config.getSection("sectors." + key);
-            SectorManager.createSector(key, sectorSection.getInt("min_x"), sectorSection.getInt("max_x"), sectorSection.getInt("min_z"), sectorSection.getInt("max_z"), sectorSection.getString("world"));
+            SectorManager.createSector(key,
+                    sectorSection.getInt("min_x"),
+                    sectorSection.getInt("max_x"),
+                    sectorSection.getInt("min_z"),
+                    sectorSection.getInt("max_z"),
+                    sectorSection.getString("world"),
+                    sectorSection.getBoolean("default"));
         }
+
+        if (SectorManager.getSectors().stream().filter(Sector::isDefaultSector).count() != 1){
+            Utils.log("&4Invalid configuration, ONE sector must be default! Stopping server...");
+            System.exit(0);
+        }
+
     }
 
     public static String getRedisHost() {

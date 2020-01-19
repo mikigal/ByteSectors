@@ -29,8 +29,8 @@ public class SectorBorderMessageTask implements Runnable {
             ActionBarAPI.sendActionBar(player, Configuration.getNearSectorActionBar()
                     .replace("{ID}", nearestSector.getId())
                     .replace("{DISTANCE}", String.valueOf(distance))
-                    .replace("{PERFORMANCE}", sector.getPerformance() + (sector.isOffline() ? "" : " TPS"))
-                    .replace("{ONLINE}", String.valueOf(sector.getOnline())));
+                    .replace("{PERFORMANCE}", nearestSector.getPerformance() + (nearestSector.isOffline() ? "" : " TPS"))
+                    .replace("{ONLINE}", String.valueOf(nearestSector.getOnline())));
         }
     }
 }

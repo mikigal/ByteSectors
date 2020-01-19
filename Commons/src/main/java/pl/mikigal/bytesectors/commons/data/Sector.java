@@ -12,14 +12,18 @@ public class Sector implements Serializable {
     private String id;
     private LocationSerializable minimum;
     private LocationSerializable maximum;
+    private boolean defaultSector;
+
     private String performance;
     private int online;
     private long lastPerformancePacket;
 
-    public Sector(String id, int minX, int maxX, int minZ, int maxZ, String world) {
+    public Sector(String id, int minX, int maxX, int minZ, int maxZ, String world, boolean defaultSector) {
         this.id = id;
         this.minimum = new LocationSerializable(minX, minZ, world);
         this.maximum = new LocationSerializable(maxX, maxZ, world);
+        this.defaultSector = defaultSector;
+
         this.performance = "OFFLINE";
         this.online = 0;
         this.lastPerformancePacket = -1;
@@ -108,5 +112,9 @@ public class Sector implements Serializable {
 
     public boolean isOffline() {
         return this.performance.equals("OFFLINE");
+    }
+
+    public boolean isDefaultSector() {
+        return defaultSector;
     }
 }

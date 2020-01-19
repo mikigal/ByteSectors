@@ -1,4 +1,3 @@
-# CONFIG
 redisHost: "localhost"
 redisPort: 6379
 redisPassword: "zaq1@WSX"
@@ -20,9 +19,11 @@ sectors:
     min_z: -1000
     max_z: 1000
     world: "world"
+    default: true # Connect to default this sector on first join
   second:
     min_x: 0
     max_x: 1000
     min_z: -1000
     max_z: 1000
     world: "world"
+    default: false

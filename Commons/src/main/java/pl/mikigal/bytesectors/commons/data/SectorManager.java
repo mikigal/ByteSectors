@@ -8,8 +8,8 @@ public class SectorManager {
 
     private static Map<String, Sector> sectors = new HashMap<>();
 
-    public static void createSector(String id, int minX, int maxX, int minZ, int maxZ, String world) {
-        Sector sector = new Sector(id, minX, maxX, minZ, maxZ, world);
+    public static void createSector(String id, int minX, int maxX, int minZ, int maxZ, String world, boolean defaultSector) {
+        Sector sector = new Sector(id, minX, maxX, minZ, maxZ, world, defaultSector);
         sectors.put(id, sector);
     }
 
@@ -22,6 +22,16 @@ public class SectorManager {
     public static Sector getSector(int x, int z, String world) {
         for (Sector sector : sectors.values()) {
             if (sector.isInSector(x, z, world)) {
+                return sector;
+            }
+        }
+
+        return null;
+    }
+
+    public static Sector getDefaultSector() {
+        for (Sector sector : sectors.values()) {
+            if (sector.isDefaultSector()) {
                 return sector;
             }
         }
