@@ -19,10 +19,12 @@ public class PacketConfigurationRequestListener extends RedisListener<PacketConf
         PacketConfiguration response = new PacketConfiguration(
                 SectorManager.getProxyChannel(),
                 SectorManager.getSectors().toArray(new Sector[0]),
+                SectorsConfiguration.getNearBorderTerrainModifyBlockDistance(),
                 SectorsConfiguration.getOutOfBorderMessage(),
                 SectorsConfiguration.getSectorOfflineMessage(),
                 SectorsConfiguration.getNearBorderActionBar(),
-                SectorsConfiguration.getNearSectorActionBar());
+                SectorsConfiguration.getNearSectorActionBar(),
+                SectorsConfiguration.getNearBorderTerrainModifyMessage());
 
         response.sendResponse(packet);
         Utils.log("Received configuration request from sector &4" + packet.getSender() + "&c!");

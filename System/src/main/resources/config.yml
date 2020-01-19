@@ -3,8 +3,11 @@ redisHost: "localhost"
 redisPort: 6379
 redisPassword: "zaq1@WSX"
 
+nearBorderTerrainModifyBlockDistance: 20
+
 outOfBorderMessage: "&cNie mozesz wyjsc poza border mapy!"
 sectorOfflineMessage: "&cTen sektor jest offline"
+nearBorderTerrainModifyMessage: "&cNie mozesz budowac 20 kratek od granicy sektora!"
 
 nearBorderActionBar: "&c&lZblizasz sie do granicy mapy ({DISTANCE}m)"
 nearSectorActionBar: "&cZblizasz sie do sektora {ID} ({DISTANCE}m) [{PERFORMANCE}] [{ONLINE} graczy]" # {PERFORMANCE} = "##.## TPS" || "OFFLINE"

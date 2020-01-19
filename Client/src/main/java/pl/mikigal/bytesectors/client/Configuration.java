@@ -13,6 +13,9 @@ public class Configuration {
     private static String redisPassword;
 
     @ConfigExclude
+    private static int nearBorderTerrainModifyBlockDistance;
+
+    @ConfigExclude
     private static String outOfBorderMessage;
 
     @ConfigExclude
@@ -23,6 +26,9 @@ public class Configuration {
 
     @ConfigExclude
     private static String nearSectorActionBar;
+
+    @ConfigExclude
+    private static String nearBorderTerrainModifyMessage;
 
     public static String getSectorId() {
         return sectorId;
@@ -70,5 +76,21 @@ public class Configuration {
 
     public static void setNearSectorActionBar(String nearSectorActionBar) {
         Configuration.nearSectorActionBar = nearSectorActionBar;
+    }
+
+    public static int getNearBorderTerrainModifyBlockDistance() {
+        return nearBorderTerrainModifyBlockDistance;
+    }
+
+    public static void setNearBorderTerrainModifyBlockDistance(int nearBorderTerrainModifyBlockDistance) {
+        Configuration.nearBorderTerrainModifyBlockDistance = nearBorderTerrainModifyBlockDistance;
+    }
+
+    public static String getNearBorderTerrainModifyMessage() {
+        return nearBorderTerrainModifyMessage;
+    }
+
+    public static void setNearBorderTerrainModifyMessage(String nearBorderTerrainModifyMessage) {
+        Configuration.nearBorderTerrainModifyMessage = nearBorderTerrainModifyMessage;
     }
 }

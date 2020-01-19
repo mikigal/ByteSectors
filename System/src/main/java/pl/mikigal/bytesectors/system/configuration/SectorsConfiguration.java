@@ -11,15 +11,18 @@ public class SectorsConfiguration {
     private static int redisPort;
     private static String redisPassword;
 
+    private static int nearBorderTerrainModifyBlockDistance;
+
     private static String outOfBorderMessage;
     private static String sectorOfflineMessage;
+    private static String nearBorderTerrainModifyMessage;
 
     private static String nearBorderActionBar;
     private static String nearSectorActionBar;
 
     private static void load(Configuration config) {
         for (String key : config.getSection("sectors").getKeys()) {
-            net.md_5.bungee.config.Configuration sectorSection = config.getSection("sectors." + key);
+            Configuration sectorSection = config.getSection("sectors." + key);
             SectorManager.createSector(key, sectorSection.getInt("min_x"), sectorSection.getInt("max_x"), sectorSection.getInt("min_z"), sectorSection.getInt("max_z"), sectorSection.getString("world"));
         }
     }
@@ -50,5 +53,13 @@ public class SectorsConfiguration {
 
     public static String getNearSectorActionBar() {
         return nearSectorActionBar;
+    }
+
+    public static int getNearBorderTerrainModifyBlockDistance() {
+        return nearBorderTerrainModifyBlockDistance;
+    }
+
+    public static String getNearBorderTerrainModifyMessage() {
+        return nearBorderTerrainModifyMessage;
     }
 }

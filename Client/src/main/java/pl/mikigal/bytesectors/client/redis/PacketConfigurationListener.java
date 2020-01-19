@@ -22,6 +22,9 @@ public class PacketConfigurationListener extends RedisListener<PacketConfigurati
         Configuration.setSectorOfflineMessage(Utils.fixColors(packet.getSectorOfflineMessage()));
         Configuration.setNearBorderActionBar(Utils.fixColors(packet.getNearBorderActionBar()));
         Configuration.setNearSectorActionBar(Utils.fixColors(packet.getNearSectorActionBar()));
+        Configuration.setNearBorderTerrainModifyBlockDistance(packet.getNearBorderTerrainModifyBlockDistance());
+        Configuration.setNearBorderTerrainModifyMessage(packet.getNearBorderTerrainModifyMessage());
+
         Utils.log("Received configuration from System! Loaded &4" + packet.getSectors().length + "&c sectors!");
     }
 }

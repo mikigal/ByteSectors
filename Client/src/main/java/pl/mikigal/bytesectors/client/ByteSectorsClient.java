@@ -1,10 +1,7 @@
 package pl.mikigal.bytesectors.client;
 
 import org.bukkit.plugin.java.JavaPlugin;
-import pl.mikigal.bytesectors.client.listener.PlayerJoinListener;
-import pl.mikigal.bytesectors.client.listener.PlayerMoveListener;
-import pl.mikigal.bytesectors.client.listener.PlayerPortalListener;
-import pl.mikigal.bytesectors.client.listener.PlayerTeleportListener;
+import pl.mikigal.bytesectors.client.listener.*;
 import pl.mikigal.bytesectors.client.redis.PacketConfigurationListener;
 import pl.mikigal.bytesectors.client.redis.PacketPlayerTransferListener;
 import pl.mikigal.bytesectors.client.redis.synchronization.PacketPerformanceSynchronizationListener;
@@ -65,7 +62,12 @@ public class ByteSectorsClient extends JavaPlugin {
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
         Utils.log("Registering listeners...");
-        RegisterUtils.registerListeners(new PlayerMoveListener(), new PlayerJoinListener(), new PlayerPortalListener(), new PlayerTeleportListener());
+        RegisterUtils.registerListeners(
+                new PlayerMoveListener(),
+                new PlayerJoinListener(),
+                new PlayerPortalListener(),
+                new PlayerTeleportListener(),
+                new BorderTerrainModifyListener());
 
         Utils.log("Registering synchronization tasks...");
         this.getServer().getScheduler().runTaskTimerAsynchronously(this, new ClientPerformanceSynchronization(), 60, 60);

@@ -7,19 +7,24 @@ public class PacketConfiguration extends Packet {
 
     private Sector[] sectors;
 
+    private int nearBorderTerrainModifyBlockDistance;
+
     private String outOfBorderMessage;
     private String sectorOfflineMessage;
+    private String nearBorderTerrainModifyMessage;
 
     private String nearBorderActionBar;
     private String nearSectorActionBar;
 
-    public PacketConfiguration(String sender, Sector[] sectors, String outOfBorderMessage, String sectorOfflineMessage, String nearBorderActionBar, String nearSectorActionBar) {
+    public PacketConfiguration(String sender, Sector[] sectors, int nearBorderTerrainModifyBlockDistance, String outOfBorderMessage, String sectorOfflineMessage, String nearBorderActionBar, String nearSectorActionBar, String nearBorderTerrainModifyMessage) {
         super(sender);
         this.sectors = sectors;
+        this.nearBorderTerrainModifyBlockDistance = nearBorderTerrainModifyBlockDistance;
         this.outOfBorderMessage = outOfBorderMessage;
         this.sectorOfflineMessage = sectorOfflineMessage;
         this.nearBorderActionBar = nearBorderActionBar;
         this.nearSectorActionBar = nearSectorActionBar;
+        this.nearBorderTerrainModifyMessage = nearBorderTerrainModifyMessage;
     }
 
     public Sector[] getSectors() {
@@ -40,5 +45,13 @@ public class PacketConfiguration extends Packet {
 
     public String getNearSectorActionBar() {
         return nearSectorActionBar;
+    }
+
+    public int getNearBorderTerrainModifyBlockDistance() {
+        return nearBorderTerrainModifyBlockDistance;
+    }
+
+    public String getNearBorderTerrainModifyMessage() {
+        return nearBorderTerrainModifyMessage;
     }
 }
