@@ -6,7 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import pl.mikigal.bytesectors.client.Configuration;
-import pl.mikigal.bytesectors.client.utils.BlockUtils;
+import pl.mikigal.bytesectors.client.util.BlockUtils;
 import pl.mikigal.bytesectors.commons.data.Sector;
 import pl.mikigal.bytesectors.commons.data.SectorManager;
 

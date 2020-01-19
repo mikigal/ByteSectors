@@ -2,7 +2,7 @@ package pl.mikigal.bytesectors.client.redis;
 
 import pl.mikigal.bytesectors.client.Configuration;
 import pl.mikigal.bytesectors.client.synchronization.SystemConfigurationSynchronization;
-import pl.mikigal.bytesectors.client.utils.Utils;
+import pl.mikigal.bytesectors.client.util.Utils;
 import pl.mikigal.bytesectors.commons.data.SectorManager;
 import pl.mikigal.bytesectors.commons.packet.configuration.PacketConfiguration;
 import pl.mikigal.bytesectors.commons.redis.RedisListener;

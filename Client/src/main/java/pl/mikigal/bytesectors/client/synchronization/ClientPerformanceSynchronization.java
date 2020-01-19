@@ -2,7 +2,7 @@ package pl.mikigal.bytesectors.client.synchronization;
 
 import org.bukkit.Bukkit;
 import pl.mikigal.bytesectors.client.Configuration;
-import pl.mikigal.bytesectors.client.utils.PerformanceUtils;
+import pl.mikigal.bytesectors.client.util.PerformanceUtils;
 import pl.mikigal.bytesectors.commons.data.SectorManager;
 import pl.mikigal.bytesectors.commons.packet.synchronization.PacketPerformanceSynchronization;
 

@@ -6,9 +6,9 @@ import pl.mikigal.bytesectors.commons.packet.synchronization.PacketTimeSynchroni
 import pl.mikigal.bytesectors.commons.redis.RedisListener;
 import pl.mikigal.bytesectors.system.ByteSectorsSystem;
 
-public class PacketTimeSynchronizationRequestListener extends RedisListener<PacketTimeSynchronizationRequest> {
+public class TimeSyncRequestListener extends RedisListener<PacketTimeSynchronizationRequest> {
 
-    public PacketTimeSynchronizationRequestListener() {
+    public TimeSyncRequestListener() {
         super(SectorManager.getProxyChannel(), PacketTimeSynchronizationRequest.class);
     }
 

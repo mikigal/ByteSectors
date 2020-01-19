@@ -10,13 +10,13 @@ import pl.mikigal.bytesectors.system.configuration.ConfigurationManager;
 import pl.mikigal.bytesectors.system.configuration.SectorsConfiguration;
 import pl.mikigal.bytesectors.system.listener.PlayerLoginListener;
 import pl.mikigal.bytesectors.system.listener.ServerKickListener;
-import pl.mikigal.bytesectors.system.redis.PacketConfigurationRequestListener;
-import pl.mikigal.bytesectors.system.redis.PacketPerformanceSynchronizationListener;
-import pl.mikigal.bytesectors.system.redis.PacketTimeSynchronizationRequestListener;
-import pl.mikigal.bytesectors.system.redis.PacketWeatherSynchronizationRequestListener;
+import pl.mikigal.bytesectors.system.redis.ConfigurationRequestListener;
+import pl.mikigal.bytesectors.system.redis.PerformanceSyncListener;
+import pl.mikigal.bytesectors.system.redis.TimeSyncRequestListener;
+import pl.mikigal.bytesectors.system.redis.WeatherSyncRequestListener;
 import pl.mikigal.bytesectors.system.synchronization.ClientTimeSynchronization;
 import pl.mikigal.bytesectors.system.synchronization.ClientWeatherSynchronization;
-import pl.mikigal.bytesectors.system.utils.Utils;
+import pl.mikigal.bytesectors.system.util.Utils;
 
 import java.util.concurrent.TimeUnit;
 
@@ -39,10 +39,10 @@ public class ByteSectorsSystem extends Plugin {
         this.commons = new ByteSectorsCommons("localhost", 6379, "zaq1@WSX");
 
         Utils.log("Subscribing Redis channels...");
-        RedisUtils.subscribe(SectorManager.getProxyChannel(), new PacketConfigurationRequestListener());
-        RedisUtils.subscribe(SectorManager.getProxyChannel(), new PacketTimeSynchronizationRequestListener());
-        RedisUtils.subscribe(SectorManager.getProxyChannel(), new PacketWeatherSynchronizationRequestListener());
-        RedisUtils.subscribe(SectorManager.getPublicChannel(), new PacketPerformanceSynchronizationListener());
+        RedisUtils.subscribe(SectorManager.getProxyChannel(), new ConfigurationRequestListener());
+        RedisUtils.subscribe(SectorManager.getProxyChannel(), new TimeSyncRequestListener());
+        RedisUtils.subscribe(SectorManager.getProxyChannel(), new WeatherSyncRequestListener());
+        RedisUtils.subscribe(SectorManager.getPublicChannel(), new PerformanceSyncListener());
 
         Utils.log("Publishing request for sectors synchronization...");
         RedisUtils.publish(SectorManager.getClientChannel(), new PacketPerformanceSynchronizationRequest(SectorManager.getProxyChannel()));

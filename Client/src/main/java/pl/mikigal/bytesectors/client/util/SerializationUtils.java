@@ -1,9 +1,7 @@
-package pl.mikigal.bytesectors.client.utils;
+package pl.mikigal.bytesectors.client.util;
 
-import io.lettuce.core.output.ByteArrayOutput;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -15,9 +13,7 @@ import pl.mikigal.bytesectors.commons.serializable.PotionEffectSerializable;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Collection;
 import java.util.List;
 

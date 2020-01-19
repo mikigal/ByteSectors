@@ -4,7 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import pl.mikigal.bytesectors.client.Configuration;
-import pl.mikigal.bytesectors.client.utils.ActionBarAPI;
+import pl.mikigal.bytesectors.client.util.ActionBarAPI;
 import pl.mikigal.bytesectors.commons.data.Sector;
 import pl.mikigal.bytesectors.commons.data.SectorManager;
 
@@ -29,7 +29,7 @@ public class SectorBorderMessageTask implements Runnable {
             ActionBarAPI.sendActionBar(player, Configuration.getNearSectorActionBar()
                     .replace("{ID}", nearestSector.getId())
                     .replace("{DISTANCE}", String.valueOf(distance))
-                    .replace("{PERFORMANCE}", nearestSector.getPerformance() + (nearestSector.isOffline() ? "" : " TPS"))
+                    .replace("{PERFORMANCE}", nearestSector.isOffline() ? "OFFLINE" : nearestSector.getPerformance() + " TPS")
                     .replace("{ONLINE}", String.valueOf(nearestSector.getOnline())));
         }
     }

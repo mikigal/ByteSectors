@@ -6,11 +6,11 @@ import pl.mikigal.bytesectors.commons.packet.configuration.PacketConfiguration;
 import pl.mikigal.bytesectors.commons.packet.configuration.PacketConfigurationRequest;
 import pl.mikigal.bytesectors.commons.redis.RedisListener;
 import pl.mikigal.bytesectors.system.configuration.SectorsConfiguration;
-import pl.mikigal.bytesectors.system.utils.Utils;
+import pl.mikigal.bytesectors.system.util.Utils;
 
-public class PacketConfigurationRequestListener extends RedisListener<PacketConfigurationRequest> {
+public class ConfigurationRequestListener extends RedisListener<PacketConfigurationRequest> {
 
-    public PacketConfigurationRequestListener() {
+    public ConfigurationRequestListener() {
         super("proxy", PacketConfigurationRequest.class);
     }
 

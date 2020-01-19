@@ -1,12 +1,12 @@
-package pl.mikigal.bytesectors.client.redis.synchronization;
+package pl.mikigal.bytesectors.system.redis;
 
 import pl.mikigal.bytesectors.commons.data.SectorManager;
 import pl.mikigal.bytesectors.commons.packet.synchronization.PacketPerformanceSynchronization;
 import pl.mikigal.bytesectors.commons.redis.RedisListener;
 
-public class PacketPerformanceSynchronizationListener extends RedisListener<PacketPerformanceSynchronization> {
+public class PerformanceSyncListener extends RedisListener<PacketPerformanceSynchronization> {
 
-    public PacketPerformanceSynchronizationListener() {
+    public PerformanceSyncListener() {
         super(SectorManager.getPublicChannel(), PacketPerformanceSynchronization.class);
     }
 

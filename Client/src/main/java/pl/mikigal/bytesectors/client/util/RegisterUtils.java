@@ -1,4 +1,4 @@
-package pl.mikigal.bytesectors.client.utils;
+package pl.mikigal.bytesectors.client.util;
 
 import org.bukkit.event.Listener;
 import pl.mikigal.bytesectors.client.ByteSectorsClient;

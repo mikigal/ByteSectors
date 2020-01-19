@@ -6,9 +6,9 @@ import pl.mikigal.bytesectors.commons.packet.synchronization.PacketWeatherSynchr
 import pl.mikigal.bytesectors.commons.redis.RedisListener;
 import pl.mikigal.bytesectors.system.ByteSectorsSystem;
 
-public class PacketWeatherSynchronizationRequestListener extends RedisListener<PacketWeatherSynchronizationRequest> {
+public class WeatherSyncRequestListener extends RedisListener<PacketWeatherSynchronizationRequest> {
 
-    public PacketWeatherSynchronizationRequestListener() {
+    public WeatherSyncRequestListener() {
         super(SectorManager.getProxyChannel(), PacketWeatherSynchronizationRequest.class);
     }
 

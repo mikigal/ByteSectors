@@ -24,7 +24,7 @@ public class Sector implements Serializable {
         this.maximum = new LocationSerializable(maxX, maxZ, world);
         this.defaultSector = defaultSector;
 
-        this.performance = "OFFLINE";
+        this.performance = null;
         this.online = 0;
         this.lastPerformancePacket = -1;
     }
@@ -89,7 +89,7 @@ public class Sector implements Serializable {
 
     public void setPerformance(String performance) {
         this.performance = performance;
-        if (!performance.equals("OFFLINE")) {
+        if (performance != null) {
             this.lastPerformancePacket = System.currentTimeMillis();
         }
     }
@@ -111,7 +111,7 @@ public class Sector implements Serializable {
     }
 
     public boolean isOffline() {
-        return this.performance.equals("OFFLINE");
+        return this.performance == null;
     }
 
     public boolean isDefaultSector() {

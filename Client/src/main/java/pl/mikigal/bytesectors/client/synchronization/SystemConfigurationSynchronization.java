@@ -1,8 +1,7 @@
 package pl.mikigal.bytesectors.client.synchronization;
 
 import org.bukkit.Bukkit;
-import pl.mikigal.bytesectors.client.ByteSectorsClient;
-import pl.mikigal.bytesectors.client.utils.Utils;
+import pl.mikigal.bytesectors.client.util.Utils;
 import pl.mikigal.bytesectors.commons.data.SectorManager;
 
 import java.util.concurrent.CountDownLatch;

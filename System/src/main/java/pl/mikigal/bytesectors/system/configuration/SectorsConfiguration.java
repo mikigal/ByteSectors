@@ -4,7 +4,7 @@ import net.md_5.bungee.config.Configuration;
 import pl.mikigal.bytesectors.commons.configuration.ConfigEntry;
 import pl.mikigal.bytesectors.commons.data.Sector;
 import pl.mikigal.bytesectors.commons.data.SectorManager;
-import pl.mikigal.bytesectors.system.utils.Utils;
+import pl.mikigal.bytesectors.system.util.Utils;
 
 @ConfigEntry
 public class SectorsConfiguration {

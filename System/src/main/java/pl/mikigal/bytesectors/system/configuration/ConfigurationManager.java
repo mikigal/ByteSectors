@@ -3,9 +3,8 @@ package pl.mikigal.bytesectors.system.configuration;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
-import pl.mikigal.bytesectors.commons.data.SectorManager;
 import pl.mikigal.bytesectors.system.ByteSectorsSystem;
-import pl.mikigal.bytesectors.system.utils.Utils;
+import pl.mikigal.bytesectors.system.util.Utils;
 
 import java.io.*;
 

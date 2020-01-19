@@ -1,4 +1,4 @@
-package pl.mikigal.bytesectors.client.utils;
+package pl.mikigal.bytesectors.client.util;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;

@@ -9,7 +9,7 @@ public class ClientPerformanceOfflineSynchronization implements Runnable {
     public void run() {
         for (Sector sector : SectorManager.getSectors()) {
             if (sector.getLastPerformancePacket() < System.currentTimeMillis() - 4000) {
-                sector.setPerformance("OFFLINE");
+                sector.setPerformance(null);
             }
         }
     }

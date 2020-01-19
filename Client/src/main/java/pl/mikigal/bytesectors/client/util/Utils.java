@@ -1,4 +1,4 @@
-package pl.mikigal.bytesectors.client.utils;
+package pl.mikigal.bytesectors.client.util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

@@ -10,13 +10,13 @@ import pl.mikigal.bytesectors.commons.data.SectorManager;
 import pl.mikigal.bytesectors.commons.redis.RedisUtils;
 import pl.mikigal.bytesectors.system.ByteSectorsSystem;
 import pl.mikigal.bytesectors.system.configuration.SectorsConfiguration;
-import pl.mikigal.bytesectors.system.utils.Utils;
+import pl.mikigal.bytesectors.system.util.Utils;
 
 public class PlayerLoginListener implements Listener {
 
     @EventHandler
     public void onConnect(ServerConnectEvent event) {
-        // TODO: 19/01/2020 Async? 
+        // TODO: 19/01/2020 Async?
         ServerConnectEvent.Reason reason = event.getReason();
         ProxiedPlayer player = event.getPlayer();
 

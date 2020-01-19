@@ -6,9 +6,9 @@ import pl.mikigal.bytesectors.commons.data.SectorManager;
 import pl.mikigal.bytesectors.commons.packet.synchronization.PacketWeatherSynchronization;
 import pl.mikigal.bytesectors.commons.redis.RedisListener;
 
-public class PacketWeatherSynchronizationListener extends RedisListener<PacketWeatherSynchronization> {
+public class WeatherSyncListener extends RedisListener<PacketWeatherSynchronization> {
 
-    public PacketWeatherSynchronizationListener() {
+    public WeatherSyncListener() {
         super(SectorManager.getClientChannel(), PacketWeatherSynchronization.class);
     }
 
