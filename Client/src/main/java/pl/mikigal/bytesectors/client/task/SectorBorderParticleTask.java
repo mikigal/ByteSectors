@@ -26,7 +26,7 @@ public class SectorBorderParticleTask implements Runnable {
                         loc.getBlockX() == sector.getMaximum().getX() ||
                         loc.getBlockZ() == sector.getMinimum().getZ() ||
                         loc.getBlockZ() == sector.getMaximum().getZ()) &&
-                        loc.getBlock().getType() == Material.AIR &&
+                        loc.getBlock().getType() == Material.AIR && // TODO: 19/01/2020 Still need fix 
                         player.isOnline()) {
 
                     player.playEffect(loc, Effect.PORTAL, 0);

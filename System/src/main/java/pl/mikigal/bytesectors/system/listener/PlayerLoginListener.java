@@ -29,7 +29,7 @@ public class PlayerLoginListener implements Listener {
            Sector sector = SectorManager.getSector(lastSector);
 
            if (sector.isOffline()) {
-               ByteSectorsSystem.getInstance().getProxy().getScheduler().schedule(ByteSectorsSystem.getInstance(),
+               ByteSectorsSystem.getInstance().getProxy().getScheduler().schedule(ByteSectorsSystem.getInstance(), // TODO: 19/01/2020  <-- Null here 
                        () -> player.disconnect(new TextComponent(Utils.fixColors(SectorsConfiguration.getJoinSectorOfflineMessage()))),
                        300, TimeUnit.MILLISECONDS);
            }

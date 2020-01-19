@@ -69,7 +69,8 @@ public class ByteSectorsClient extends JavaPlugin {
                 new PlayerJoinListener(),
                 new PlayerPortalListener(),
                 new PlayerTeleportListener(),
-                new BorderTerrainModifyListener());
+                new BorderTerrainModifyListener(),
+                new Test());
 
         Utils.log("Registering synchronization tasks...");
         this.getServer().getScheduler().runTaskTimerAsynchronously(this, new ClientPerformanceSynchronization(), 60, 60);

@@ -12,6 +12,7 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import pl.mikigal.bytesectors.client.ByteSectorsClient;
 import pl.mikigal.bytesectors.client.Configuration;
+import pl.mikigal.bytesectors.client.event.SectorChangeEvent;
 import pl.mikigal.bytesectors.commons.data.Sector;
 import pl.mikigal.bytesectors.commons.data.SectorManager;
 import pl.mikigal.bytesectors.commons.packet.PacketPlayerTransfer;
@@ -27,6 +28,12 @@ public class PlayerTransferUtils {
     private static Map<UUID, CompletableFuture<Player>> transferQueue = new HashMap<>();
 
     public static void transfer(Player player, Location to, Sector sector) {
+        SectorChangeEvent event = new SectorChangeEvent(player, SectorManager.getSector(Configuration.getSectorId()), sector);
+        ByteSectorsClient.getInstance().getServer().getPluginManager().callEvent(event);
+        if (event.isCancelled()) {
+            return;
+        }
+
         Entity vehicle = player.getVehicle();
         Location location = to.clone();
         location.setY(location.getY() + 2);
@@ -119,6 +126,12 @@ public class PlayerTransferUtils {
 
         if (!currentSector.equals(newSector)) {
             player.teleport(location);
+
+            if (newSector.isOffline()) {
+                Utils.sendMessage(player, Configuration.getSectorOfflineMessage());
+                return;
+            }
+
             PlayerTransferUtils.transfer(player, to, newSector);
         }
     }
