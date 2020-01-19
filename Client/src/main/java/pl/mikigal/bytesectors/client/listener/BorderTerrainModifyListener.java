@@ -1,7 +1,6 @@
 package pl.mikigal.bytesectors.client.listener;
 
 import org.bukkit.Location;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
@@ -37,8 +36,9 @@ public class BorderTerrainModifyListener implements Listener {
 
     @EventHandler
     public void onSpawn(EntitySpawnEvent event) {
-        if (event.getEntityType() != EntityType.PLAYER) {
-            this.handleModifyTerrain(null, event.getEntity().getLocation(), event);
+        Location location = event.getLocation();
+        if (!SectorManager.getSector(location.getBlockX(), location.getBlockZ(), location.getWorld().getName()).equals(SectorManager.getSector(Configuration.getSectorId()))) {
+            event.setCancelled(true);
         }
     }
 

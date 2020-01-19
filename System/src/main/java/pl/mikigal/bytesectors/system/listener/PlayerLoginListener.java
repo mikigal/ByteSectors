@@ -30,6 +30,10 @@ public class PlayerLoginListener implements Listener {
             return;
         }
 
+        if (reason == ServerConnectEvent.Reason.PLUGIN_MESSAGE) {
+            return;
+        }
+
         String lastSector = RedisUtils.get(player.getUniqueId().toString());
         if (lastSector == null) {
             lastSector = SectorManager.getDefaultSector().getId();
