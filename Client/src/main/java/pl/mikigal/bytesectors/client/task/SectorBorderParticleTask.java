@@ -22,9 +22,12 @@ public class SectorBorderParticleTask implements Runnable {
             }
 
             for (Location loc : BlockUtils.sphere(location, 8, 0, false, true, 1)) {
-                if (loc != null && (loc.getBlockX() == sector.getMinimum().getX() || loc.getBlockX() == sector.getMaximum().getX() ||
-                        loc.getBlockZ() == sector.getMinimum().getZ() || loc.getBlockZ() == sector.getMaximum().getZ()) &&
-                        (loc.getBlock() == null || loc.getBlock().getType() == Material.AIR)) {
+                if ((loc.getBlockX() == sector.getMinimum().getX() ||
+                        loc.getBlockX() == sector.getMaximum().getX() ||
+                        loc.getBlockZ() == sector.getMinimum().getZ() ||
+                        loc.getBlockZ() == sector.getMaximum().getZ()) &&
+                        loc.getBlock().getType() == Material.AIR &&
+                        player.isOnline()) {
 
                     player.playEffect(loc, Effect.PORTAL, 0);
                 }
