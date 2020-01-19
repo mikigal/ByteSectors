@@ -44,19 +44,21 @@ public class ByteSectorsClient extends JavaPlugin {
         RedisUtils.subscribe(Configuration.getSectorId(), new PacketConfigurationListener());
         RedisUtils.subscribe(SectorManager.getClientChannel(), new PacketTimeSynchronizationListener());
         RedisUtils.subscribe(SectorManager.getClientChannel(), new PacketWeatherSynchronizationListener());
-        RedisUtils.subscribe(SectorManager.getClientChannel(), new PacketPerformanceSynchronizationListener());
+        RedisUtils.subscribe(SectorManager.getPublicChannel(), new PacketPerformanceSynchronizationListener());
         RedisUtils.subscribe(SectorManager.getClientChannel(), new PacketPerformanceSynchronizationRequestListener());
         RedisUtils.subscribe(SectorManager.getClientChannel(), new PacketPlayerTransferListener());
 
-        Utils.log("Publishing request for sectors configuration and synchronization...");
+        Utils.log("Publishing request for sectors configuration...");
         RedisUtils.publish(SectorManager.getProxyChannel(), new PacketConfigurationRequest(Configuration.getSectorId()));
-        RedisUtils.publish(SectorManager.getProxyChannel(), new PacketTimeSynchronizationRequest(Configuration.getSectorId()));
-        RedisUtils.publish(SectorManager.getProxyChannel(), new PacketWeatherSynchronizationRequest(Configuration.getSectorId()));
-        RedisUtils.publish(SectorManager.getClientChannel(), new PacketPerformanceSynchronizationRequest(Configuration.getSectorId()));
 
         if (!SystemConfigurationSynchronization.waitForConfiguration()) {
             return;
         }
+
+        Utils.log("Publishing request for sectors synchronization...");
+        RedisUtils.publish(SectorManager.getProxyChannel(), new PacketTimeSynchronizationRequest(Configuration.getSectorId()));
+        RedisUtils.publish(SectorManager.getProxyChannel(), new PacketWeatherSynchronizationRequest(Configuration.getSectorId()));
+        RedisUtils.publish(SectorManager.getClientChannel(), new PacketPerformanceSynchronizationRequest(Configuration.getSectorId()));
 
         Utils.log("Registering outgoing BungeeCord channel...");
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");

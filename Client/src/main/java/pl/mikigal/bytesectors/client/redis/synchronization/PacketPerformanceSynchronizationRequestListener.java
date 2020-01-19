@@ -22,6 +22,6 @@ public class PacketPerformanceSynchronizationRequestListener extends RedisListen
 
         String performance = PerformanceUtils.getTps();
         SectorManager.getSector(Configuration.getSectorId()).setPerformance(performance);
-        new PacketPerformanceSynchronization(Configuration.getSectorId(), performance, Bukkit.getOnlinePlayers().size()).send(SectorManager.getClientChannel());
+        new PacketPerformanceSynchronization(Configuration.getSectorId(), performance, Bukkit.getOnlinePlayers().size()).send(SectorManager.getPublicChannel());
     }
 }

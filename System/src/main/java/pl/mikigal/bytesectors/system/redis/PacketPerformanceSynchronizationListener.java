@@ -1,4 +1,4 @@
-package pl.mikigal.bytesectors.client.redis.synchronization;
+package pl.mikigal.bytesectors.system.redis;
 
 import pl.mikigal.bytesectors.commons.data.SectorManager;
 import pl.mikigal.bytesectors.commons.packet.synchronization.PacketPerformanceSynchronization;

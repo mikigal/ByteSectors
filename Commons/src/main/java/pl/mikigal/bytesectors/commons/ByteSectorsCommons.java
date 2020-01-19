@@ -17,6 +17,7 @@ public class ByteSectorsCommons {
     private static ByteSectorsCommons instance;
     private RedisClient redisClient;
     private StatefulRedisPubSubConnection<String, Packet> pubSubConnection;
+    private StatefulRedisConnection<String, String> databaseConnect;
     private StatefulRedisConnection<String, Packet> connection;
 
     public ByteSectorsCommons(String hostname, int port, String password) {
@@ -28,6 +29,7 @@ public class ByteSectorsCommons {
                                 .build());
 
         this.pubSubConnection = this.redisClient.connectPubSub(FST_CODEC);
+        this.databaseConnect = this.redisClient.connect();
         this.connection = this.redisClient.connect(FST_CODEC);
 
         System.out.println("[ByteSectorsCommons] Connected to Redis!");
@@ -36,6 +38,7 @@ public class ByteSectorsCommons {
     public void closeConnections() {
         this.getPubSubConnection().sync().unsubscribe(RedisUtils.getSubscribedChannels().toArray(new String[0]));
         this.pubSubConnection.close();
+        this.databaseConnect.close();
         this.connection.close();
     }
 
@@ -45,6 +48,10 @@ public class ByteSectorsCommons {
 
     public StatefulRedisPubSubConnection<String, Packet> getPubSubConnection() {
         return pubSubConnection;
+    }
+
+    public StatefulRedisConnection<String, String> getDatabaseConnect() {
+        return databaseConnect;
     }
 
     public StatefulRedisConnection<String, Packet> getConnection() {

@@ -37,6 +37,11 @@ public class SectorManager {
         return sectors.values();
     }
 
+
+    public static String getPublicChannel() {
+        return "public";
+    }
+
     public static String getProxyChannel() {
         return "proxy";
     }

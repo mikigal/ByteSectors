@@ -14,6 +14,14 @@ public class RedisUtils {
         ByteSectorsCommons.getInstance().getConnection().sync().publish(channel, packet);
     }
 
+    public static void set(String key, String value) {
+        ByteSectorsCommons.getInstance().getDatabaseConnect().sync().set(key, value);
+    }
+
+    public static String get(String key) {
+        return ByteSectorsCommons.getInstance().getDatabaseConnect().sync().get(key);
+    }
+
     public static void subscribe(String channel, RedisListener<? extends Packet> listener) {
         ByteSectorsCommons.getInstance().getPubSubConnection().addListener(listener);
 

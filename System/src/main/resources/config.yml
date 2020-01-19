@@ -5,6 +5,7 @@ redisPassword: "zaq1@WSX"
 
 nearBorderTerrainModifyBlockDistance: 20
 
+joinSectorOfflineMessage: "&cSektor na ktorym jestes jest offline"
 outOfBorderMessage: "&cNie mozesz wyjsc poza border mapy!"
 sectorOfflineMessage: "&cTen sektor jest offline"
 nearBorderTerrainModifyMessage: "&cNie mozesz budowac 20 kratek od granicy sektora!"

@@ -15,6 +15,7 @@ import pl.mikigal.bytesectors.client.Configuration;
 import pl.mikigal.bytesectors.commons.data.Sector;
 import pl.mikigal.bytesectors.commons.data.SectorManager;
 import pl.mikigal.bytesectors.commons.packet.PacketPlayerTransfer;
+import pl.mikigal.bytesectors.commons.redis.RedisUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -84,6 +85,7 @@ public class PlayerTransferUtils {
         }
 
         transferQueue.remove(packet.getUniqueId());
+        Bukkit.getScheduler().runTaskAsynchronously(ByteSectorsClient.getInstance(), () -> RedisUtils.set(player.getUniqueId().toString(), Configuration.getSectorId()));
     }
 
     public static void addTransferToQueue(PacketPlayerTransfer packet) {

@@ -13,6 +13,7 @@ public class SectorsConfiguration {
 
     private static int nearBorderTerrainModifyBlockDistance;
 
+    private static String joinSectorOfflineMessage;
     private static String outOfBorderMessage;
     private static String sectorOfflineMessage;
     private static String nearBorderTerrainModifyMessage;
@@ -61,5 +62,9 @@ public class SectorsConfiguration {
 
     public static String getNearBorderTerrainModifyMessage() {
         return nearBorderTerrainModifyMessage;
+    }
+
+    public static String getJoinSectorOfflineMessage() {
+        return joinSectorOfflineMessage;
     }
 }
