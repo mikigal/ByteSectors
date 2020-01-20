@@ -51,12 +51,11 @@ public class ByteSectorsSystem extends Plugin {
         this.getProxy().getPluginManager().registerListener(this, new PlayerLoginListener());
         this.getProxy().getPluginManager().registerListener(this, new ServerKickListener());
 
-
         Utils.log("Registering synchronization tasks...");
         this.timeSynchronization = new ClientTimeSynchronization();
         this.weatherSynchronization = new ClientWeatherSynchronization();
-        this.getProxy().getScheduler().schedule(this, this.timeSynchronization, 50, TimeUnit.SECONDS);
-        this.getProxy().getScheduler().schedule(this, this.weatherSynchronization, 10, TimeUnit.MINUTES);
+        this.getProxy().getScheduler().schedule(this, this.timeSynchronization, 1, 50, TimeUnit.SECONDS);
+        this.getProxy().getScheduler().schedule(this, this.weatherSynchronization, 1, 10, TimeUnit.MINUTES);
     }
 
     @Override

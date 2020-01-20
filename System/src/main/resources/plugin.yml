@@ -1,3 +1,4 @@
 name: ByteSectorsSystem
 version: 1.0
+author: mikigal
 main: pl.mikigal.bytesectors.system.ByteSectorsSystem

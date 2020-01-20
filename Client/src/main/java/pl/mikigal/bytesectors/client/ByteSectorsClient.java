@@ -74,10 +74,9 @@ public class ByteSectorsClient extends JavaPlugin {
 
         Utils.log("Registering listeners...");
         RegisterUtils.register(
-                new PlayerMoveListener(),
                 new PlayerJoinListener(),
-                new PlayerPortalListener(),
-                new PlayerTeleportListener(),
+                new SectorChangeListener(),
+                new WeatherChangeListener(),
                 new InventoryClickListener(),
                 new BorderTerrainModifyListener());
 
@@ -85,9 +84,6 @@ public class ByteSectorsClient extends JavaPlugin {
         RegisterUtils.register(new SectorsCommand());
 
         Utils.log("Done!");
-
-        System.out.println(Configuration.getOnlineItem());
-        System.out.println(Configuration.getOfflineItem());
     }
 
     @Override
