@@ -69,7 +69,7 @@ public class ByteSectorsClient extends JavaPlugin {
         this.getServer().getScheduler().runTaskTimerAsynchronously(this, new ClientPerformanceOfflineSynchronization(), 60, 60);
 
         Utils.log("Registering other tasks...");
-        this.getServer().getScheduler().runTaskTimerAsynchronously(this, new SectorBorderParticleTask(), 3, 3);
+        this.getServer().getScheduler().runTaskTimer(this, new SectorBorderParticleTask(), 6, 6);
         this.getServer().getScheduler().runTaskTimerAsynchronously(this, new SectorBorderMessageTask(), 10, 10);
 
         Utils.log("Registering listeners...");

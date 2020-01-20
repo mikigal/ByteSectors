@@ -54,8 +54,8 @@ public class PlayerTransferUtils {
                 player.isFlying(),
                 player.getAllowFlight(),
                 player.getGameMode().toString(),
-                vehicle == null ? null : vehicle.getType().getName(),
-                vehicle == null ? null : SerializationUtils.serializeLocation(vehicle.getLocation()));
+                null, //TODO: Add vehicle support
+                null);
 
         packet.send(sector);
         connectToSector(player, sector);
