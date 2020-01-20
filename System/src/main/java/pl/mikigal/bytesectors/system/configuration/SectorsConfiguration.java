@@ -2,8 +2,10 @@ package pl.mikigal.bytesectors.system.configuration;
 
 import net.md_5.bungee.config.Configuration;
 import pl.mikigal.bytesectors.commons.configuration.ConfigEntry;
+import pl.mikigal.bytesectors.commons.configuration.ConfigExclude;
 import pl.mikigal.bytesectors.commons.data.Sector;
 import pl.mikigal.bytesectors.commons.data.SectorManager;
+import pl.mikigal.bytesectors.commons.serializable.ItemBuilderSerializable;
 import pl.mikigal.bytesectors.system.util.Utils;
 
 @ConfigEntry
@@ -12,6 +14,15 @@ public class SectorsConfiguration {
     private static String redisHost;
     private static int redisPort;
     private static String redisPassword;
+
+    @ConfigExclude
+    private static String sectorsGuiName;
+
+    @ConfigExclude
+    private static ItemBuilderSerializable onlineItem;
+
+    @ConfigExclude
+    private static ItemBuilderSerializable offlineItem;
 
     private static int nearBorderTerrainModifyBlockDistance;
 
@@ -40,6 +51,18 @@ public class SectorsConfiguration {
             System.exit(0);
         }
 
+        Configuration sectorsGui = config.getSection("sectorsGui");
+        sectorsGuiName = sectorsGui.getString("guiName");
+        onlineItem = parseItemStack(sectorsGui.getSection("online"));
+        offlineItem = parseItemStack(sectorsGui.getSection("offline"));
+    }
+
+    private static ItemBuilderSerializable parseItemStack(Configuration section) {
+        return new ItemBuilderSerializable(section.getString("material"),
+                section.getInt("amount"),
+                section.getShort("durability"),
+                section.getString("name"),
+                section.getStringList("lore").toArray(new String[0]));
     }
 
     public static String getRedisHost() {
@@ -80,5 +103,17 @@ public class SectorsConfiguration {
 
     public static String getJoinSectorOfflineMessage() {
         return joinSectorOfflineMessage;
+    }
+
+    public static String getSectorsGuiName() {
+        return sectorsGuiName;
+    }
+
+    public static ItemBuilderSerializable getOnlineItem() {
+        return onlineItem;
+    }
+
+    public static ItemBuilderSerializable getOfflineItem() {
+        return offlineItem;
     }
 }

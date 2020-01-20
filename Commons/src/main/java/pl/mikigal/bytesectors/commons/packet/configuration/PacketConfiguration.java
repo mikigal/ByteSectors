@@ -2,6 +2,7 @@ package pl.mikigal.bytesectors.commons.packet.configuration;
 
 import pl.mikigal.bytesectors.commons.data.Sector;
 import pl.mikigal.bytesectors.commons.packet.Packet;
+import pl.mikigal.bytesectors.commons.serializable.ItemBuilderSerializable;
 
 public class PacketConfiguration extends Packet {
 
@@ -16,7 +17,11 @@ public class PacketConfiguration extends Packet {
     private String nearBorderActionBar;
     private String nearSectorActionBar;
 
-    public PacketConfiguration(String sender, Sector[] sectors, int nearBorderTerrainModifyBlockDistance, String outOfBorderMessage, String sectorOfflineMessage, String nearBorderActionBar, String nearSectorActionBar, String nearBorderTerrainModifyMessage) {
+    private String sectorsGuiName;
+    private ItemBuilderSerializable onlineItem;
+    private ItemBuilderSerializable offlineItem;
+
+    public PacketConfiguration(String sender, Sector[] sectors, int nearBorderTerrainModifyBlockDistance, String outOfBorderMessage, String sectorOfflineMessage, String nearBorderActionBar, String nearSectorActionBar, String nearBorderTerrainModifyMessage, String sectorsGuiName, ItemBuilderSerializable onlineItem, ItemBuilderSerializable offlineItem) {
         super(sender);
         this.sectors = sectors;
         this.nearBorderTerrainModifyBlockDistance = nearBorderTerrainModifyBlockDistance;
@@ -25,6 +30,9 @@ public class PacketConfiguration extends Packet {
         this.nearBorderActionBar = nearBorderActionBar;
         this.nearSectorActionBar = nearSectorActionBar;
         this.nearBorderTerrainModifyMessage = nearBorderTerrainModifyMessage;
+        this.sectorsGuiName = sectorsGuiName;
+        this.onlineItem = onlineItem;
+        this.offlineItem = offlineItem;
     }
 
     public Sector[] getSectors() {
@@ -53,5 +61,17 @@ public class PacketConfiguration extends Packet {
 
     public String getNearBorderTerrainModifyMessage() {
         return nearBorderTerrainModifyMessage;
+    }
+
+    public String getSectorsGuiName() {
+        return sectorsGuiName;
+    }
+
+    public ItemBuilderSerializable getOnlineItem() {
+        return onlineItem;
+    }
+
+    public ItemBuilderSerializable getOfflineItem() {
+        return offlineItem;
     }
 }

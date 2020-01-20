@@ -1,6 +1,7 @@
 package pl.mikigal.bytesectors.client;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import pl.mikigal.bytesectors.client.command.SectorsCommand;
 import pl.mikigal.bytesectors.client.listener.*;
 import pl.mikigal.bytesectors.client.redis.PacketConfigurationListener;
 import pl.mikigal.bytesectors.client.redis.PacketPlayerTransferListener;
@@ -63,14 +64,6 @@ public class ByteSectorsClient extends JavaPlugin {
         Utils.log("Registering outgoing BungeeCord channel...");
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
-        Utils.log("Registering listeners...");
-        RegisterUtils.registerListeners(
-                new PlayerMoveListener(),
-                new PlayerJoinListener(),
-                new PlayerPortalListener(),
-                new PlayerTeleportListener(),
-                new BorderTerrainModifyListener());
-
         Utils.log("Registering synchronization tasks...");
         this.getServer().getScheduler().runTaskTimerAsynchronously(this, new ClientPerformanceSynchronization(), 60, 60);
         this.getServer().getScheduler().runTaskTimerAsynchronously(this, new ClientPerformanceOfflineSynchronization(), 60, 60);
@@ -79,7 +72,22 @@ public class ByteSectorsClient extends JavaPlugin {
         this.getServer().getScheduler().runTaskTimerAsynchronously(this, new SectorBorderParticleTask(), 3, 3);
         this.getServer().getScheduler().runTaskTimerAsynchronously(this, new SectorBorderMessageTask(), 10, 10);
 
+        Utils.log("Registering listeners...");
+        RegisterUtils.register(
+                new PlayerMoveListener(),
+                new PlayerJoinListener(),
+                new PlayerPortalListener(),
+                new PlayerTeleportListener(),
+                new InventoryClickListener(),
+                new BorderTerrainModifyListener());
+
+        Utils.log("Registering commands...");
+        RegisterUtils.register(new SectorsCommand());
+
         Utils.log("Done!");
+
+        System.out.println(Configuration.getOnlineItem());
+        System.out.println(Configuration.getOfflineItem());
     }
 
     @Override

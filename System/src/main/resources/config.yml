@@ -27,3 +27,21 @@ sectors:
     max_z: 1000
     world: "world"
     default: false
+
+sectorsGui:
+  guiName: "&c&lSectors status"
+  online:
+    material: WOOL
+    amount: 1
+    durability: 5
+    name: "&a&l{ID} [ONLINE]"
+    lore:
+      - "&7TPS: &9{PERFORMANCE}"
+      - "&7Online: &9{ONLINE}"
+  offline:
+    material: WOOL
+    amount: 1
+    durability: 14
+    name: "&c&l{ID} [OFFLINE]"
+    lore:
+      - "&7Last online: &9{LAST_ONLINE}"

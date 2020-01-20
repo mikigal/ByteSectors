@@ -26,7 +26,7 @@ public class Sector implements Serializable {
 
         this.performance = null;
         this.online = 0;
-        this.lastPerformancePacket = -1;
+        this.lastPerformancePacket = System.currentTimeMillis() - 4000;
     }
 
     public String getId() {

@@ -1,5 +1,6 @@
 package pl.mikigal.bytesectors.client;
 
+import pl.mikigal.bytesectors.client.util.ItemBuilder;
 import pl.mikigal.bytesectors.commons.configuration.ConfigEntry;
 import pl.mikigal.bytesectors.commons.configuration.ConfigExclude;
 
@@ -11,6 +12,15 @@ public class Configuration {
     private static String redisHost;
     private static int redisPort;
     private static String redisPassword;
+
+    @ConfigExclude
+    private static String sectorsGuiName;
+
+    @ConfigExclude
+    private static ItemBuilder onlineItem;
+
+    @ConfigExclude
+    private static ItemBuilder offlineItem;
 
     @ConfigExclude
     private static int nearBorderTerrainModifyBlockDistance;
@@ -92,5 +102,29 @@ public class Configuration {
 
     public static void setNearBorderTerrainModifyMessage(String nearBorderTerrainModifyMessage) {
         Configuration.nearBorderTerrainModifyMessage = nearBorderTerrainModifyMessage;
+    }
+
+    public static String getSectorsGuiName() {
+        return sectorsGuiName;
+    }
+
+    public static void setSectorsGuiName(String sectorsGuiName) {
+        Configuration.sectorsGuiName = sectorsGuiName;
+    }
+
+    public static ItemBuilder getOnlineItem() {
+        return onlineItem;
+    }
+
+    public static void setOnlineItem(ItemBuilder onlineItem) {
+        Configuration.onlineItem = onlineItem;
+    }
+
+    public static ItemBuilder getOfflineItem() {
+        return offlineItem;
+    }
+
+    public static void setOfflineItem(ItemBuilder offlineItem) {
+        Configuration.offlineItem = offlineItem;
     }
 }

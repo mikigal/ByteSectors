@@ -24,7 +24,10 @@ public class ConfigurationRequestListener extends RedisListener<PacketConfigurat
                 SectorsConfiguration.getSectorOfflineMessage(),
                 SectorsConfiguration.getNearBorderActionBar(),
                 SectorsConfiguration.getNearSectorActionBar(),
-                SectorsConfiguration.getNearBorderTerrainModifyMessage());
+                SectorsConfiguration.getNearBorderTerrainModifyMessage(),
+                SectorsConfiguration.getSectorsGuiName(),
+                SectorsConfiguration.getOnlineItem(),
+                SectorsConfiguration.getOfflineItem());
 
         response.sendResponse(packet);
         Utils.log("Received configuration request from sector &4" + packet.getSender() + "&c!");

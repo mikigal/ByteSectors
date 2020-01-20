@@ -1,7 +1,6 @@
 # ByteSectors [WIP]
 
 ## TODO
- - Configurable GUI with status of sectors
  - Make switch to last sector after join async
  - Plugin development API
  - Few instances of sector on the same coordinates with load balancer

@@ -2,12 +2,14 @@ package pl.mikigal.bytesectors.client.util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
+import pl.mikigal.bytesectors.commons.serializable.ItemBuilderSerializable;
 import pl.mikigal.bytesectors.commons.serializable.LocationSerializable;
 import pl.mikigal.bytesectors.commons.serializable.PotionEffectSerializable;
 
@@ -43,6 +45,12 @@ public class SerializationUtils {
         }
 
         return potionEffects;
+    }
+
+    public static ItemBuilder deserializeIemBuilder(ItemBuilderSerializable serializable) {
+        return new ItemBuilder(Material.getMaterial(serializable.getMaterial()), serializable.getAmount(), serializable.getDurability())
+                .setName(serializable.getName())
+                .setLore(serializable.getLore());
     }
 
     public static String serializeItemstacks(ItemStack[] items) {

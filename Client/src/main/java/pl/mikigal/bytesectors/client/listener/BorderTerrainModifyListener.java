@@ -10,7 +10,6 @@ import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
-import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import pl.mikigal.bytesectors.client.Configuration;
 import pl.mikigal.bytesectors.client.util.Utils;
@@ -32,14 +31,6 @@ public class BorderTerrainModifyListener implements Listener {
     @EventHandler
     public void onIgnite(BlockIgniteEvent event) {
         this.handleModifyTerrain(event.getPlayer(), event.getBlock().getLocation(), event);
-    }
-
-    @EventHandler
-    public void onSpawn(EntitySpawnEvent event) {
-        Location location = event.getLocation();
-        if (!SectorManager.getSector(location.getBlockX(), location.getBlockZ(), location.getWorld().getName()).equals(SectorManager.getSector(Configuration.getSectorId()))) {
-            event.setCancelled(true);
-        }
     }
 
     @EventHandler

@@ -36,7 +36,7 @@ public class ByteSectorsSystem extends Plugin {
         ConfigAPI.load(ConfigurationManager.initConfig(), SectorsConfiguration.class);
 
         Utils.log("Connecting do Redis...");
-        this.commons = new ByteSectorsCommons("localhost", 6379, "zaq1@WSX");
+        this.commons = new ByteSectorsCommons(SectorsConfiguration.getRedisHost(), SectorsConfiguration.getRedisPort(), SectorsConfiguration.getRedisPassword());
 
         Utils.log("Subscribing Redis channels...");
         RedisUtils.subscribe(SectorManager.getProxyChannel(), new ConfigurationRequestListener());
