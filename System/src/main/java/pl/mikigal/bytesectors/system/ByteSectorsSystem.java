@@ -4,6 +4,7 @@ import net.md_5.bungee.api.plugin.Plugin;
 import pl.mikigal.bytesectors.commons.ByteSectorsCommons;
 import pl.mikigal.bytesectors.commons.configuration.ConfigAPI;
 import pl.mikigal.bytesectors.commons.data.SectorManager;
+import pl.mikigal.bytesectors.commons.mysql.DataSource;
 import pl.mikigal.bytesectors.commons.packet.synchronization.PacketPerformanceSynchronizationRequest;
 import pl.mikigal.bytesectors.commons.redis.RedisUtils;
 import pl.mikigal.bytesectors.system.configuration.ConfigurationManager;
@@ -24,6 +25,7 @@ public class ByteSectorsSystem extends Plugin {
 
     private static ByteSectorsSystem instance;
     private ByteSectorsCommons commons;
+    private DataSource dataSource;
 
     private ClientTimeSynchronization timeSynchronization;
     private ClientWeatherSynchronization weatherSynchronization;
@@ -39,14 +41,21 @@ public class ByteSectorsSystem extends Plugin {
         Utils.log("Connecting do Redis...");
         this.commons = new ByteSectorsCommons(SectorsConfiguration.getRedisHost(), SectorsConfiguration.getRedisPort(), SectorsConfiguration.getRedisPassword());
 
-        Utils.log("Subscribing Redis channels...");
+        Utils.log("Connecting to MySQL...");
+        this.dataSource = new DataSource(SectorsConfiguration.getMysqlHost(),
+                SectorsConfiguration.getMysqlPort(),
+                SectorsConfiguration.getMysqlUsername(),
+                SectorsConfiguration.getMysqlPassword(),
+                SectorsConfiguration.getMysqlPassword());
+
+        Utils.log("Registering Redis listeners...");
         RedisUtils.subscribe(SectorManager.getSystemChannel(), new ConfigurationRequestListener());
         RedisUtils.subscribe(SectorManager.getSystemChannel(), new TimeSyncRequestListener());
         RedisUtils.subscribe(SectorManager.getSystemChannel(), new WeatherSyncRequestListener());
         RedisUtils.subscribe(SectorManager.getPublicChannel(), new PerformanceSyncListener());
 
         Utils.log("Publishing request for sectors synchronization...");
-        RedisUtils.publish(SectorManager.getClientChannel(), new PacketPerformanceSynchronizationRequest());
+        new PacketPerformanceSynchronizationRequest().send(SectorManager.getClientChannel());
 
         Utils.log("Registering listeners...");
         this.getProxy().getPluginManager().registerListener(this, new PlayerLoginListener());
@@ -74,5 +83,9 @@ public class ByteSectorsSystem extends Plugin {
 
     public ClientWeatherSynchronization getWeatherSynchronization() {
         return weatherSynchronization;
+    }
+
+    public DataSource getDataSource() {
+        return dataSource;
     }
 }

@@ -1,6 +1,12 @@
 redisHost: "localhost"
 redisPort: 6379
-redisPassword: "zaq1@WSX"
+redisPassword: ""
+
+mysqlHost: "localhost"
+mysqlPort: 3306
+mysqlUsername: "root"
+mysqlPassword: ""
+mysqlDatabase: ""
 
 nearBorderTerrainModifyBlockDistance: 20 ## How near border modifying terrain should be disallowed
 

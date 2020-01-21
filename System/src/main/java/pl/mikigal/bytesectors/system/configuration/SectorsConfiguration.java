@@ -15,6 +15,12 @@ public class SectorsConfiguration {
     private static int redisPort;
     private static String redisPassword;
 
+    private static String mysqlHost;
+    private static int mysqlPort;
+    private static String mysqlUsername;
+    private static String mysqlPassword;
+    private static String mysqlDatabase;
+
     @ConfigExclude
     private static String sectorsGuiName;
 
@@ -115,5 +121,25 @@ public class SectorsConfiguration {
 
     public static ItemBuilderSerializable getOfflineItem() {
         return offlineItem;
+    }
+
+    public static String getMysqlHost() {
+        return mysqlHost;
+    }
+
+    public static int getMysqlPort() {
+        return mysqlPort;
+    }
+
+    public static String getMysqlUsername() {
+        return mysqlUsername;
+    }
+
+    public static String getMysqlPassword() {
+        return mysqlPassword;
+    }
+
+    public static String getMysqlDatabase() {
+        return mysqlDatabase;
     }
 }

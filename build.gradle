@@ -17,6 +17,7 @@ subprojects {
     dependencies {
         compile group: 'io.lettuce', name: 'lettuce-core', version: '5.2.1.RELEASE'
         compile group: 'de.ruedigermoeller', name: 'fst', version: '2.57'
+        compile group: 'com.zaxxer', name: 'HikariCP', version: '3.4.2'
     }
 
     jar {

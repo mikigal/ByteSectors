@@ -42,7 +42,7 @@ public class ByteSectorsClient extends JavaPlugin {
         Utils.log("Connecting to Redis...");
         commons = new ByteSectorsCommons(Configuration.getRedisHost(), Configuration.getRedisPort(), Configuration.getRedisPassword());
 
-        Utils.log("Subscribing Redis channels...");
+        Utils.log("Registering Redis listeners...");
         RedisUtils.subscribe(Configuration.getSectorId(), new PacketConfigurationListener());
         RedisUtils.subscribe(SectorManager.getClientChannel(), new TimeSyncListener());
         RedisUtils.subscribe(SectorManager.getClientChannel(), new WeatherSyncListener());
@@ -51,16 +51,16 @@ public class ByteSectorsClient extends JavaPlugin {
         RedisUtils.subscribe(SectorManager.getClientChannel(), new PacketPlayerTransferListener());
 
         Utils.log("Publishing request for sectors configuration...");
-        RedisUtils.publish(SectorManager.getSystemChannel(), new PacketConfigurationRequest());
+        new PacketConfigurationRequest().send(SectorManager.getSystemChannel());
 
         if (!SystemConfigurationSynchronization.waitForConfiguration()) {
             return;
         }
 
         Utils.log("Publishing request for sectors synchronization...");
-        RedisUtils.publish(SectorManager.getSystemChannel(), new PacketTimeSynchronizationRequest());
-        RedisUtils.publish(SectorManager.getSystemChannel(), new PacketWeatherSynchronizationRequest());
-        RedisUtils.publish(SectorManager.getClientChannel(), new PacketPerformanceSynchronizationRequest());
+        new PacketTimeSynchronizationRequest().send(SectorManager.getSystemChannel());
+        new PacketWeatherSynchronizationRequest().send(SectorManager.getSystemChannel());
+        new PacketPerformanceSynchronizationRequest().send(SectorManager.getClientChannel());
 
         Utils.log("Registering outgoing BungeeCord channel...");
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");

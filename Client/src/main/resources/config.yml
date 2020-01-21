@@ -1,5 +1,5 @@
 redisHost: "localhost"
 redisPort: 6379
-redisPassword: "zaq1@WSX"
+redisPassword: ""
 
 sectorId: "first" # Server name from BungeeCord config

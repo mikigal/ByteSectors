@@ -46,4 +46,8 @@ public abstract class RedisListener<T extends Packet> implements RedisPubSubList
     public void punsubscribed(String pattern, long count) {
 
     }
+
+    public String getChannel() {
+        return channel;
+    }
 }
