@@ -9,11 +9,11 @@ import pl.mikigal.bytesectors.system.ByteSectorsSystem;
 public class TimeSyncRequestListener extends RedisListener<PacketTimeSynchronizationRequest> {
 
     public TimeSyncRequestListener() {
-        super(SectorManager.getProxyChannel(), PacketTimeSynchronizationRequest.class);
+        super(SectorManager.getSystemChannel(), PacketTimeSynchronizationRequest.class);
     }
 
     @Override
     public void onMessage(PacketTimeSynchronizationRequest packet) {
-        packet.sendResponse(new PacketTimeSynchronization(SectorManager.getProxyChannel(), ByteSectorsSystem.getInstance().getTimeSynchronization().getTicks()));
+        packet.sendResponse(new PacketTimeSynchronization(ByteSectorsSystem.getInstance().getTimeSynchronization().getTicks()));
     }
 }

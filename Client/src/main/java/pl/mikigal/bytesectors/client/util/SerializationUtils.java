@@ -29,10 +29,18 @@ public class SerializationUtils {
         return new Location(Bukkit.getWorld(location.getWorld()), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
     }
 
+    public static PotionEffectSerializable serializePotionEffect(PotionEffect potionEffect) {
+        return new PotionEffectSerializable(potionEffect.getType().getName(), potionEffect.getAmplifier(), potionEffect.getDuration());
+    }
+
+    public static PotionEffect deserializePotionEffect(PotionEffectSerializable serializable) {
+        return new PotionEffect(PotionEffectType.getByName(serializable.getPotionType()), serializable.getAmplifier(), serializable.getDuration());
+    }
+
     public static PotionEffectSerializable[] serializePotionEffects(Collection<PotionEffect> potionEffects) {
         List<PotionEffectSerializable> serialized = new ArrayList<>();
         for (PotionEffect potionEffect : potionEffects) {
-            serialized.add(new PotionEffectSerializable(potionEffect.getType().getName(), potionEffect.getAmplifier(), potionEffect.getDuration()));
+            serialized.add(serializePotionEffect(potionEffect));
         }
 
         return serialized.toArray(new PotionEffectSerializable[0]);
@@ -41,7 +49,7 @@ public class SerializationUtils {
     public static List<PotionEffect> deserializePotionEffects(PotionEffectSerializable[] serialized) {
         List<PotionEffect> potionEffects = new ArrayList<>();
         for (PotionEffectSerializable effect : serialized) {
-            potionEffects.add(new PotionEffect(PotionEffectType.getByName(effect.getPotionType()), effect.getAmplifier(), effect.getDuration()));
+            potionEffects.add(deserializePotionEffect(effect));
         }
 
         return potionEffects;

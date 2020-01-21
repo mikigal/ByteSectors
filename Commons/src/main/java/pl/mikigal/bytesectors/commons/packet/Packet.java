@@ -1,6 +1,7 @@
 package pl.mikigal.bytesectors.commons.packet;
 
 import pl.mikigal.bytesectors.commons.data.Sector;
+import pl.mikigal.bytesectors.commons.data.SectorManager;
 import pl.mikigal.bytesectors.commons.redis.RedisUtils;
 
 import java.io.Serializable;
@@ -9,8 +10,8 @@ public class Packet implements Serializable {
 
     protected String sender;
 
-    protected Packet(String sender) {
-        this.sender = sender;
+    protected Packet() {
+        this.sender = SectorManager.getCurrentSector();
     }
 
     public String getSender() {

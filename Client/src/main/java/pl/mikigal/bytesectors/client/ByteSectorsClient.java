@@ -37,6 +37,7 @@ public class ByteSectorsClient extends JavaPlugin {
         Utils.log("Loading configuration...");
         this.saveDefaultConfig();
         ConfigAPI.load(this.getConfig(), Configuration.class);
+        SectorManager.setCurrentSector(Configuration.getSectorId());
 
         Utils.log("Connecting to Redis...");
         commons = new ByteSectorsCommons(Configuration.getRedisHost(), Configuration.getRedisPort(), Configuration.getRedisPassword());
@@ -50,16 +51,16 @@ public class ByteSectorsClient extends JavaPlugin {
         RedisUtils.subscribe(SectorManager.getClientChannel(), new PacketPlayerTransferListener());
 
         Utils.log("Publishing request for sectors configuration...");
-        RedisUtils.publish(SectorManager.getProxyChannel(), new PacketConfigurationRequest(Configuration.getSectorId()));
+        RedisUtils.publish(SectorManager.getSystemChannel(), new PacketConfigurationRequest());
 
         if (!SystemConfigurationSynchronization.waitForConfiguration()) {
             return;
         }
 
         Utils.log("Publishing request for sectors synchronization...");
-        RedisUtils.publish(SectorManager.getProxyChannel(), new PacketTimeSynchronizationRequest(Configuration.getSectorId()));
-        RedisUtils.publish(SectorManager.getProxyChannel(), new PacketWeatherSynchronizationRequest(Configuration.getSectorId()));
-        RedisUtils.publish(SectorManager.getClientChannel(), new PacketPerformanceSynchronizationRequest(Configuration.getSectorId()));
+        RedisUtils.publish(SectorManager.getSystemChannel(), new PacketTimeSynchronizationRequest());
+        RedisUtils.publish(SectorManager.getSystemChannel(), new PacketWeatherSynchronizationRequest());
+        RedisUtils.publish(SectorManager.getClientChannel(), new PacketPerformanceSynchronizationRequest());
 
         Utils.log("Registering outgoing BungeeCord channel...");
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
@@ -75,6 +76,7 @@ public class ByteSectorsClient extends JavaPlugin {
         Utils.log("Registering listeners...");
         RegisterUtils.register(
                 new PlayerJoinListener(),
+                new PlayerQuitListener(),
                 new SectorChangeListener(),
                 new WeatherChangeListener(),
                 new InventoryClickListener(),

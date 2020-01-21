@@ -16,7 +16,6 @@ public class PlayerLoginListener implements Listener {
 
     @EventHandler
     public void onConnect(ServerConnectEvent event) {
-        // TODO: 19/01/2020 Async?
         ServerConnectEvent.Reason reason = event.getReason();
         ProxiedPlayer player = event.getPlayer();
 

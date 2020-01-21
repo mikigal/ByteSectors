@@ -17,7 +17,6 @@ public class ConfigurationRequestListener extends RedisListener<PacketConfigurat
     @Override
     public void onMessage(PacketConfigurationRequest packet) {
         PacketConfiguration response = new PacketConfiguration(
-                SectorManager.getProxyChannel(),
                 SectorManager.getSectors().toArray(new Sector[0]),
                 SectorsConfiguration.getNearBorderTerrainModifyBlockDistance(),
                 SectorsConfiguration.getOutOfBorderMessage(),

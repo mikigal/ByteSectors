@@ -6,8 +6,8 @@ public class PacketTimeSynchronization extends Packet {
 
     private long ticks;
 
-    public PacketTimeSynchronization(String sender, long ticks) {
-        super(sender);
+    public PacketTimeSynchronization(long ticks) {
+        super();
         this.ticks = ticks;
     }
 

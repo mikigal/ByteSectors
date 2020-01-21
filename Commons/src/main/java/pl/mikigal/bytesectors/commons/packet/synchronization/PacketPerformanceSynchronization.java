@@ -7,8 +7,8 @@ public class PacketPerformanceSynchronization extends Packet {
     private String performance;
     private int online;
 
-    public PacketPerformanceSynchronization(String sender, String performance, int online) {
-        super(sender);
+    public PacketPerformanceSynchronization(String performance, int online) {
+        super();
         this.performance = performance;
         this.online = online;
     }

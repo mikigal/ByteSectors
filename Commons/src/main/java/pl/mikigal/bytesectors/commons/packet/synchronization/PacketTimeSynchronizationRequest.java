@@ -4,7 +4,7 @@ import pl.mikigal.bytesectors.commons.packet.Packet;
 
 public class PacketTimeSynchronizationRequest extends Packet {
 
-    public PacketTimeSynchronizationRequest(String sender) {
-        super(sender);
+    public PacketTimeSynchronizationRequest() {
+        super();
     }
 }

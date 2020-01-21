@@ -24,8 +24,8 @@ public class PacketPlayerTransfer extends Packet {
     private String vehicleType;
     private LocationSerializable vehicleLocation;
 
-    public PacketPlayerTransfer(String sender, UUID uniqueId, String inventory, String armor, String enderChest, LocationSerializable location, PotionEffectSerializable[] potionEffects, int level, int exp, double health, int foodLevel, int fireTicks, boolean fly, boolean allowFlight, String gameMode, String vehicleType, LocationSerializable vehicleLocation) {
-        super(sender);
+    public PacketPlayerTransfer( UUID uniqueId, String inventory, String armor, String enderChest, LocationSerializable location, PotionEffectSerializable[] potionEffects, int level, int exp, double health, int foodLevel, int fireTicks, boolean fly, boolean allowFlight, String gameMode, String vehicleType, LocationSerializable vehicleLocation) {
+        super();
         this.uniqueId = uniqueId;
         this.inventory = inventory;
         this.armor = armor;

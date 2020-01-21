@@ -34,18 +34,19 @@ public class ByteSectorsSystem extends Plugin {
 
         Utils.log("Loading configuration...");
         ConfigAPI.load(ConfigurationManager.initConfig(), SectorsConfiguration.class);
+        SectorManager.setCurrentSector(SectorManager.getSystemChannel());
 
         Utils.log("Connecting do Redis...");
         this.commons = new ByteSectorsCommons(SectorsConfiguration.getRedisHost(), SectorsConfiguration.getRedisPort(), SectorsConfiguration.getRedisPassword());
 
         Utils.log("Subscribing Redis channels...");
-        RedisUtils.subscribe(SectorManager.getProxyChannel(), new ConfigurationRequestListener());
-        RedisUtils.subscribe(SectorManager.getProxyChannel(), new TimeSyncRequestListener());
-        RedisUtils.subscribe(SectorManager.getProxyChannel(), new WeatherSyncRequestListener());
+        RedisUtils.subscribe(SectorManager.getSystemChannel(), new ConfigurationRequestListener());
+        RedisUtils.subscribe(SectorManager.getSystemChannel(), new TimeSyncRequestListener());
+        RedisUtils.subscribe(SectorManager.getSystemChannel(), new WeatherSyncRequestListener());
         RedisUtils.subscribe(SectorManager.getPublicChannel(), new PerformanceSyncListener());
 
         Utils.log("Publishing request for sectors synchronization...");
-        RedisUtils.publish(SectorManager.getClientChannel(), new PacketPerformanceSynchronizationRequest(SectorManager.getProxyChannel()));
+        RedisUtils.publish(SectorManager.getClientChannel(), new PacketPerformanceSynchronizationRequest());
 
         Utils.log("Registering listeners...");
         this.getProxy().getPluginManager().registerListener(this, new PlayerLoginListener());

@@ -7,6 +7,7 @@ import java.util.Map;
 public class SectorManager {
 
     private static Map<String, Sector> sectors = new HashMap<>();
+    private static String currentSector;
 
     public static void createSector(String id, int minX, int maxX, int minZ, int maxZ, String world, boolean defaultSector) {
         Sector sector = new Sector(id, minX, maxX, minZ, maxZ, world, defaultSector);
@@ -39,6 +40,14 @@ public class SectorManager {
         return null;
     }
 
+    public static String getCurrentSector() {
+        return currentSector;
+    }
+
+    public static void setCurrentSector(String currentSector) {
+        SectorManager.currentSector = currentSector;
+    }
+
     public static Sector getSector(String id) {
         return sectors.get(id);
     }
@@ -47,12 +56,11 @@ public class SectorManager {
         return sectors.values();
     }
 
-
     public static String getPublicChannel() {
         return "public";
     }
 
-    public static String getProxyChannel() {
+    public static String getSystemChannel() {
         return "proxy";
     }
 

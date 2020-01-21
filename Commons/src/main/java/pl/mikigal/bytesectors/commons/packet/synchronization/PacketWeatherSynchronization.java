@@ -7,8 +7,8 @@ public class PacketWeatherSynchronization extends Packet {
     private boolean clear;
     private boolean thundering;
 
-    public PacketWeatherSynchronization(String sender, boolean clear, boolean thundering) {
-        super(sender);
+    public PacketWeatherSynchronization(boolean clear, boolean thundering) {
+        super();
         this.clear = clear;
         this.thundering = thundering;
     }

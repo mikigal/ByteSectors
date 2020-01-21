@@ -11,6 +11,7 @@ public class PlayerJoinListener implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
+        event.setJoinMessage(null);
         Bukkit.getScheduler().runTaskLater(ByteSectorsClient.getInstance(), () -> PlayerTransferUtils.acceptTransfer(event.getPlayer()), 5);
     }
 }

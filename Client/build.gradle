@@ -12,6 +12,7 @@ apply plugin: 'com.github.johnrengelman.shadow'
 
 shadowJar {
     relocate('io.netty', 'pl.mikigal.bytesectors.netty')
+    classifier = 'shadow'
 }
 
 jar.dependsOn shadowJar
@@ -39,11 +40,11 @@ tasks.withType(Jar) {
 }
 
 task deleteJar(type: Delete) {
-    delete '/Users/mikigal/Documents/Programowanie/Java/ByteSectors/Servers/First/plugins/Client-1.0-SNAPSHOT-all.jar'
-    delete '/Users/mikigal/Documents/Programowanie/Java/ByteSectors/Servers/Second/plugins/Client-1.0-SNAPSHOT-all.jar'
+    delete '/Users/mikigal/Documents/Programowanie/Java/ByteSectors/Servers/First/plugins/Client-1.0-SNAPSHOT.jar'
+    delete '/Users/mikigal/Documents/Programowanie/Java/ByteSectors/Servers/Second/plugins/Client-1.0-SNAPSHOT.jar'
 }
 
 task copyJar(type: Copy) {
-    from '/Users/mikigal/Documents/Programowanie/Java/ByteSectors/Servers/First/plugins/Client-1.0-SNAPSHOT-all.jar'
+    from '/Users/mikigal/Documents/Programowanie/Java/ByteSectors/Servers/First/plugins/Client-1.0-SNAPSHOT-shadow.jar'
     into "/Users/mikigal/Documents/Programowanie/Java/ByteSectors/Servers/Second/plugins"
 }

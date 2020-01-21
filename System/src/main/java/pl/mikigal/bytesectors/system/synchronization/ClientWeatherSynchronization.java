@@ -15,7 +15,7 @@ public class ClientWeatherSynchronization implements Runnable {
         this.clear = ThreadLocalRandom.current().nextBoolean();
         this.thundering = ThreadLocalRandom.current().nextBoolean();
 
-        new PacketWeatherSynchronization(SectorManager.getClientChannel(), this.clear, this.thundering).send(SectorManager.getClientChannel());
+        new PacketWeatherSynchronization(this.clear, this.thundering).send(SectorManager.getClientChannel());
     }
 
     public boolean isClear() {

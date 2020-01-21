@@ -2,15 +2,15 @@ redisHost: "localhost"
 redisPort: 6379
 redisPassword: "zaq1@WSX"
 
-nearBorderTerrainModifyBlockDistance: 20
+nearBorderTerrainModifyBlockDistance: 20 ## How near border modifying terrain should be disallowed
 
-joinSectorOfflineMessage: "&cSektor na ktorym jestes jest offline"
-outOfBorderMessage: "&cNie mozesz wyjsc poza border mapy!"
-sectorOfflineMessage: "&cTen sektor jest offline"
-nearBorderTerrainModifyMessage: "&cNie mozesz budowac 20 kratek od granicy sektora!"
+joinSectorOfflineMessage: "&cYour sector is offline!" # Kick message for players that's trying to join, but are on offline sector
+outOfBorderMessage: "&cYou can't go outside map's border!" # Message when player is trying to go outside map's border
+sectorOfflineMessage: "&cThat sector is offline! You can't go there" # Message when player is trying to go to offline sector
+nearBorderTerrainModifyMessage: "&cYou can modify terrain near border" # Message when player is trying to modify blocked terrain near border
 
-nearBorderActionBar: "&c&lZblizasz sie do granicy mapy ({DISTANCE}m)"
-nearSectorActionBar: "&cZblizasz sie do sektora {ID} ({DISTANCE}m) [{PERFORMANCE}] [{ONLINE} graczy]" # {PERFORMANCE} = "##.## TPS" || "OFFLINE"
+nearBorderActionBar: "&c&lYou are approaching map border ({DISTANCE}m)" # ActionBar message near border
+nearSectorActionBar: "&cYou are approaching sector {ID} ({DISTANCE}m) [{PERFORMANCE}] [{ONLINE} online]" # ActionBar message near another sector
 
 sectors:
   first: # Server name from BungeeCord config
@@ -18,7 +18,7 @@ sectors:
     max_x: 0 # Max => exclusive
     min_z: -1000
     max_z: 1000
-    world: "world"
+    world: "world" # Sector's world
     default: true # Connect to default this sector on first join
   second:
     min_x: 0
@@ -28,7 +28,7 @@ sectors:
     world: "world"
     default: false
 
-sectorsGui:
+sectorsGui: # GUI with sectors' status
   guiName: "&c&lSectors status"
   online:
     material: WOOL

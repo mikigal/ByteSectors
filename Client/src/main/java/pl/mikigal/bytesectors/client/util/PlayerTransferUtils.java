@@ -39,7 +39,6 @@ public class PlayerTransferUtils {
         location.setY(location.getY() + 2);
 
         PacketPlayerTransfer packet = new PacketPlayerTransfer(
-                Configuration.getSectorId(),
                 player.getUniqueId(),
                 SerializationUtils.serializeItemstacks(player.getInventory().getContents()),
                 SerializationUtils.serializeItemstacks(player.getInventory().getArmorContents()),
@@ -54,7 +53,7 @@ public class PlayerTransferUtils {
                 player.isFlying(),
                 player.getAllowFlight(),
                 player.getGameMode().toString(),
-                null, //TODO: Add vehicle support
+                null,
                 null);
 
         packet.send(sector);

@@ -9,12 +9,12 @@ import pl.mikigal.bytesectors.system.ByteSectorsSystem;
 public class WeatherSyncRequestListener extends RedisListener<PacketWeatherSynchronizationRequest> {
 
     public WeatherSyncRequestListener() {
-        super(SectorManager.getProxyChannel(), PacketWeatherSynchronizationRequest.class);
+        super(SectorManager.getSystemChannel(), PacketWeatherSynchronizationRequest.class);
     }
 
     @Override
     public void onMessage(PacketWeatherSynchronizationRequest packet) {
-        packet.sendResponse(new PacketWeatherSynchronization(SectorManager.getProxyChannel(),
+        packet.sendResponse(new PacketWeatherSynchronization(
                 ByteSectorsSystem.getInstance().getWeatherSynchronization().isClear(),
                 ByteSectorsSystem.getInstance().getWeatherSynchronization().isThundering()));
     }

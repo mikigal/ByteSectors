@@ -19,7 +19,7 @@ public class ClientTimeSynchronization implements Runnable {
             this.ticks = 0;
         }
 
-        new PacketTimeSynchronization(SectorManager.getProxyChannel(), this.ticks).send(SectorManager.getClientChannel());
+        new PacketTimeSynchronization(this.ticks).send(SectorManager.getClientChannel());
     }
 
     public long getTicks() {

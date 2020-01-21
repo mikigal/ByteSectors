@@ -4,7 +4,7 @@ import pl.mikigal.bytesectors.commons.packet.Packet;
 
 public class PacketWeatherSynchronizationRequest extends Packet {
 
-    public PacketWeatherSynchronizationRequest(String sender) {
-        super(sender);
+    public PacketWeatherSynchronizationRequest() {
+        super();
     }
 }

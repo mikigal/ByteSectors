@@ -21,8 +21,8 @@ public class PacketConfiguration extends Packet {
     private ItemBuilderSerializable onlineItem;
     private ItemBuilderSerializable offlineItem;
 
-    public PacketConfiguration(String sender, Sector[] sectors, int nearBorderTerrainModifyBlockDistance, String outOfBorderMessage, String sectorOfflineMessage, String nearBorderActionBar, String nearSectorActionBar, String nearBorderTerrainModifyMessage, String sectorsGuiName, ItemBuilderSerializable onlineItem, ItemBuilderSerializable offlineItem) {
-        super(sender);
+    public PacketConfiguration(Sector[] sectors, int nearBorderTerrainModifyBlockDistance, String outOfBorderMessage, String sectorOfflineMessage, String nearBorderActionBar, String nearSectorActionBar, String nearBorderTerrainModifyMessage, String sectorsGuiName, ItemBuilderSerializable onlineItem, ItemBuilderSerializable offlineItem) {
+        super();
         this.sectors = sectors;
         this.nearBorderTerrainModifyBlockDistance = nearBorderTerrainModifyBlockDistance;
         this.outOfBorderMessage = outOfBorderMessage;

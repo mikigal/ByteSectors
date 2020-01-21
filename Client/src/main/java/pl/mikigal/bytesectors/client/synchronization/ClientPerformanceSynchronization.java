@@ -12,6 +12,6 @@ public class ClientPerformanceSynchronization implements Runnable {
     public void run() {
         String performance = PerformanceUtils.getTps();
         SectorManager.getSector(Configuration.getSectorId()).setPerformance(performance);
-        new PacketPerformanceSynchronization(Configuration.getSectorId(), performance, Bukkit.getOnlinePlayers().size()).send(SectorManager.getPublicChannel());
+        new PacketPerformanceSynchronization(performance, Bukkit.getOnlinePlayers().size()).send(SectorManager.getPublicChannel());
     }
 }
