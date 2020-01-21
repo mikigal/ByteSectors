@@ -1,11 +1,13 @@
 package pl.mikigal.bytesectors.client.listener;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.vehicle.VehicleMoveEvent;
 import pl.mikigal.bytesectors.client.util.PlayerTransferUtils;
 
 public class SectorChangeListener implements Listener {
@@ -30,5 +32,12 @@ public class SectorChangeListener implements Listener {
         }
 
         PlayerTransferUtils.handlePlayerMove(event.getPlayer(), to, event);
+    }
+
+    @EventHandler
+    public void onVehicleMove(VehicleMoveEvent event) {
+        if (event.getVehicle().getPassenger() instanceof Player) {
+            PlayerTransferUtils.handlePlayerMove(((Player) event.getVehicle().getPassenger()), event.getTo(), event);
+        }
     }
 }

@@ -125,6 +125,10 @@ public class PlayerTransferUtils {
         }
 
         if (!currentSector.equals(newSector)) {
+            if (player.isInsideVehicle()) {
+                player.leaveVehicle();
+            }
+
             player.teleport(location);
 
             if (newSector.isOffline()) {
