@@ -4,12 +4,12 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StatementSerializable implements Serializable {
+public class DatabaseStatement implements Serializable {
 
     private String sql;
     private Map<Integer, Object> replacements;
 
-    public StatementSerializable(String sql, Object... replacements) {
+    public DatabaseStatement(String sql, Object... replacements) {
         this.sql = sql;
         this.replacements = new HashMap<>();
 

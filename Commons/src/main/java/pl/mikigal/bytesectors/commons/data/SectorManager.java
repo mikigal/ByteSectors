@@ -40,7 +40,11 @@ public class SectorManager {
         return null;
     }
 
-    public static String getCurrentSector() {
+    public static Sector getCurrentSector() {
+        return sectors.get(currentSector);
+    }
+
+    public static String getCurrentSectorId() {
         return currentSector;
     }
 

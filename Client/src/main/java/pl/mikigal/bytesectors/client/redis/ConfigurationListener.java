@@ -11,7 +11,7 @@ import pl.mikigal.bytesectors.commons.redis.RedisListener;
 public class ConfigurationListener extends RedisListener<PacketConfiguration> {
 
     public ConfigurationListener() {
-        super(Configuration.getSectorId(), PacketConfiguration.class);
+        super(SectorManager.getCurrentSectorId(), PacketConfiguration.class);
     }
 
     @Override

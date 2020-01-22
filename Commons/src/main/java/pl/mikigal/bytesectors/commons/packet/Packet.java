@@ -11,7 +11,7 @@ public class Packet implements Serializable {
     protected String sender;
 
     protected Packet() {
-        this.sender = SectorManager.getCurrentSector();
+        this.sender = SectorManager.getCurrentSectorId();
     }
 
     public String getSender() {

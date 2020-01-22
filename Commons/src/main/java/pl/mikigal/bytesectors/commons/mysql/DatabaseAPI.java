@@ -13,7 +13,7 @@ public class DatabaseAPI {
 
     private static Map<UUID, CompletableFuture<ResultSetSerializable>> waitingQueries = new HashMap<>();
 
-    public static UUID query(StatementSerializable statement, Consumer<? super ResultSetSerializable> future) {
+    public static UUID query(DatabaseStatement statement, Consumer<? super ResultSetSerializable> future) {
         PacketDatabaseQuery packet = new PacketDatabaseQuery(statement, true);
         CompletableFuture<ResultSetSerializable> completableFuture = new CompletableFuture<>();
         completableFuture.thenAccept(future);
@@ -23,10 +23,9 @@ public class DatabaseAPI {
         return packet.getUniqueId();
     }
 
-    public static UUID execute(StatementSerializable statement) {
+    public static void execute(DatabaseStatement statement) {
         PacketDatabaseQuery packet = new PacketDatabaseQuery(statement, false);
         packet.send(SectorManager.getSystemChannel());
-        return packet.getUniqueId();
     }
 
     public static Map<UUID, CompletableFuture<ResultSetSerializable>> getWaitingQueries() {

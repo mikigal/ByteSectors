@@ -43,7 +43,7 @@ public class DataSource {
         }
     }
 
-    public void execute(StatementSerializable serializable) {
+    public void execute(DatabaseStatement serializable) {
         try {
             Connection connection = this.getConnection();
             PreparedStatement statement = connection.prepareStatement(serializable.getSql());
@@ -59,7 +59,7 @@ public class DataSource {
         }
     }
 
-    public ResultSetSerializable query(StatementSerializable serializable) {
+    public ResultSetSerializable query(DatabaseStatement serializable) {
         try {
             Connection connection = this.getConnection();
             PreparedStatement statement = connection.prepareStatement(serializable.getSql());

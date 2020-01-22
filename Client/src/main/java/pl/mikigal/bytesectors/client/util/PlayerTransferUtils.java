@@ -28,7 +28,7 @@ public class PlayerTransferUtils {
     private static Map<UUID, CompletableFuture<Player>> transferQueue = new HashMap<>();
 
     public static void transfer(Player player, Location to, Sector sector) {
-        SectorChangeEvent event = new SectorChangeEvent(player, SectorManager.getSector(Configuration.getSectorId()), sector);
+        SectorChangeEvent event = new SectorChangeEvent(player, SectorManager.getCurrentSector(), sector);
         ByteSectorsClient.getInstance().getServer().getPluginManager().callEvent(event);
         if (event.isCancelled()) {
             return;
@@ -91,7 +91,7 @@ public class PlayerTransferUtils {
         }
 
         transferQueue.remove(packet.getUniqueId());
-        Bukkit.getScheduler().runTaskAsynchronously(ByteSectorsClient.getInstance(), () -> RedisUtils.set(player.getUniqueId().toString(), Configuration.getSectorId()));
+        Bukkit.getScheduler().runTaskAsynchronously(ByteSectorsClient.getInstance(), () -> RedisUtils.set(player.getUniqueId().toString(), SectorManager.getCurrentSectorId()));
     }
 
     public static void addTransferToQueue(PacketPlayerTransfer packet) {

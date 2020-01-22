@@ -12,7 +12,7 @@ public class SectorBorderMessageTask implements Runnable {
 
     @Override
     public void run() {
-        Sector sector = SectorManager.getSector(Configuration.getSectorId());
+        Sector sector = SectorManager.getCurrentSector();
         for (Player player : Bukkit.getOnlinePlayers()) {
             Location location = player.getLocation();
             int distance = sector.getDistanceToBorder(location.getBlockX(), location.getBlockZ());

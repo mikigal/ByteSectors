@@ -49,7 +49,7 @@ public class BorderTerrainModifyListener implements Listener {
     }
 
     private void handleModifyTerrain(Player player, Location location, Cancellable cancellable) {
-        Sector sector = SectorManager.getSector(Configuration.getSectorId());
+        Sector sector = SectorManager.getCurrentSector();
         int distance = sector.getDistanceToBorder(location.getBlockX(), location.getBlockZ());
         if (distance <= Configuration.getNearBorderTerrainModifyBlockDistance()) {
             cancellable.setCancelled(true);

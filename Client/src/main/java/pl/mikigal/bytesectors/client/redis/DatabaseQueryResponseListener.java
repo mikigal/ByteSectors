@@ -11,7 +11,7 @@ import java.util.concurrent.CompletableFuture;
 public class DatabaseQueryResponseListener extends RedisListener<PacketDatabaseQueryResponse> {
 
     public DatabaseQueryResponseListener() {
-        super(SectorManager.getCurrentSector(), PacketDatabaseQueryResponse.class);
+        super(SectorManager.getCurrentSectorId(), PacketDatabaseQueryResponse.class);
     }
 
     @Override

@@ -6,7 +6,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import pl.mikigal.bytesectors.client.ByteSectorsClient;
-import pl.mikigal.bytesectors.client.Configuration;
 import pl.mikigal.bytesectors.client.util.BlockUtils;
 import pl.mikigal.bytesectors.commons.data.Sector;
 import pl.mikigal.bytesectors.commons.data.SectorManager;
@@ -21,7 +20,7 @@ public class SectorBorderParticleTask implements Runnable {
     @Override
     public void run() {
         Map<Player, List<Location>> particles = new HashMap<>();
-        Sector sector = SectorManager.getSector(Configuration.getSectorId());
+        Sector sector = SectorManager.getCurrentSector();
         for (Player player : Bukkit.getOnlinePlayers()) {
             Location location = player.getLocation();
             if (sector.getDistanceToBorder(location.getBlockX(), location.getBlockZ()) > 150) {

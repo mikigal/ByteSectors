@@ -8,7 +8,7 @@ import pl.mikigal.bytesectors.commons.redis.RedisListener;
 public class PlayerTransferListener extends RedisListener<PacketPlayerTransfer> {
 
     public PlayerTransferListener() {
-        super(SectorManager.getCurrentSector(), PacketPlayerTransfer.class);
+        super(SectorManager.getCurrentSectorId(), PacketPlayerTransfer.class);
     }
 
     @Override
