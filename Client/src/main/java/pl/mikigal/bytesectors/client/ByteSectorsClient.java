@@ -20,9 +20,6 @@ import pl.mikigal.bytesectors.client.util.Utils;
 import pl.mikigal.bytesectors.commons.ByteSectorsCommons;
 import pl.mikigal.bytesectors.commons.configuration.ConfigAPI;
 import pl.mikigal.bytesectors.commons.data.SectorManager;
-import pl.mikigal.bytesectors.commons.mysql.DatabaseAPI;
-import pl.mikigal.bytesectors.commons.mysql.DatabaseStatement;
-import pl.mikigal.bytesectors.commons.mysql.Row;
 import pl.mikigal.bytesectors.commons.packet.configuration.PacketConfigurationRequest;
 import pl.mikigal.bytesectors.commons.packet.synchronization.PacketPerformanceSynchronizationRequest;
 import pl.mikigal.bytesectors.commons.packet.synchronization.PacketTimeSynchronizationRequest;
@@ -91,14 +88,6 @@ public class ByteSectorsClient extends JavaPlugin {
         RegisterUtils.register(new SectorsCommand());
 
         Utils.log("Done!");
-
-
-        DatabaseAPI.query(new DatabaseStatement("SELECT * FROM `test`"), resultSet -> {
-            System.out.println("Received MySQL query!");
-            for (Row row : resultSet.getRows()) {
-                System.out.println(row.getString("second"));
-            }
-        });
     }
 
     @Override
