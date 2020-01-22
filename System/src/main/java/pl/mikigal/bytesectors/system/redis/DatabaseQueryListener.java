@@ -15,12 +15,14 @@ public class DatabaseQueryListener extends RedisListener<PacketDatabaseQuery> {
 
     @Override
     public void onMessage(PacketDatabaseQuery packet) {
-        if (!packet.isQuery()) {
-            ByteSectorsSystem.getInstance().getDataSource().execute(packet.getStatement());
-            return;
-        }
+        ByteSectorsSystem.getInstance().getProxy().getScheduler().runAsync(ByteSectorsSystem.getInstance(), () -> {
+            if (!packet.isQuery()) {
+                ByteSectorsSystem.getInstance().getDataSource().execute(packet.getStatement());
+                return;
+            }
 
-        ResultSetSerializable resultSet = ByteSectorsSystem.getInstance().getDataSource().query(packet.getStatement());
-        new PacketDatabaseQueryResponse(packet.getUniqueId(), resultSet).sendResponse(packet);
+            ResultSetSerializable resultSet = ByteSectorsSystem.getInstance().getDataSource().query(packet.getStatement());
+            new PacketDatabaseQueryResponse(packet.getUniqueId(), resultSet).sendResponse(packet);
+        });
     }
 }
