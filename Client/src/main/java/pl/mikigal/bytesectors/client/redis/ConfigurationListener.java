@@ -8,9 +8,9 @@ import pl.mikigal.bytesectors.commons.data.SectorManager;
 import pl.mikigal.bytesectors.commons.packet.configuration.PacketConfiguration;
 import pl.mikigal.bytesectors.commons.redis.RedisListener;
 
-public class PacketConfigurationListener extends RedisListener<PacketConfiguration> {
+public class ConfigurationListener extends RedisListener<PacketConfiguration> {
 
-    public PacketConfigurationListener() {
+    public ConfigurationListener() {
         super(Configuration.getSectorId(), PacketConfiguration.class);
     }
 

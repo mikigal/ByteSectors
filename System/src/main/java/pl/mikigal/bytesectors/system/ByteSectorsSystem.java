@@ -11,10 +11,7 @@ import pl.mikigal.bytesectors.system.configuration.ConfigurationManager;
 import pl.mikigal.bytesectors.system.configuration.SectorsConfiguration;
 import pl.mikigal.bytesectors.system.listener.PlayerLoginListener;
 import pl.mikigal.bytesectors.system.listener.ServerKickListener;
-import pl.mikigal.bytesectors.system.redis.ConfigurationRequestListener;
-import pl.mikigal.bytesectors.system.redis.PerformanceSyncListener;
-import pl.mikigal.bytesectors.system.redis.TimeSyncRequestListener;
-import pl.mikigal.bytesectors.system.redis.WeatherSyncRequestListener;
+import pl.mikigal.bytesectors.system.redis.*;
 import pl.mikigal.bytesectors.system.synchronization.ClientTimeSynchronization;
 import pl.mikigal.bytesectors.system.synchronization.ClientWeatherSynchronization;
 import pl.mikigal.bytesectors.system.util.Utils;
@@ -50,6 +47,7 @@ public class ByteSectorsSystem extends Plugin {
 
         Utils.log("Registering Redis listeners...");
         RedisUtils.subscribe(SectorManager.getSystemChannel(), new ConfigurationRequestListener());
+        RedisUtils.subscribe(SectorManager.getSystemChannel(), new DatabaseQueryListener());
         RedisUtils.subscribe(SectorManager.getSystemChannel(), new TimeSyncRequestListener());
         RedisUtils.subscribe(SectorManager.getSystemChannel(), new WeatherSyncRequestListener());
         RedisUtils.subscribe(SectorManager.getPublicChannel(), new PerformanceSyncListener());

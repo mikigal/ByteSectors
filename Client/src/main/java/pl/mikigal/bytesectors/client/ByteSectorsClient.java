@@ -3,8 +3,9 @@ package pl.mikigal.bytesectors.client;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.mikigal.bytesectors.client.command.SectorsCommand;
 import pl.mikigal.bytesectors.client.listener.*;
-import pl.mikigal.bytesectors.client.redis.PacketConfigurationListener;
-import pl.mikigal.bytesectors.client.redis.PacketPlayerTransferListener;
+import pl.mikigal.bytesectors.client.redis.ConfigurationListener;
+import pl.mikigal.bytesectors.client.redis.DatabaseQueryResponseListener;
+import pl.mikigal.bytesectors.client.redis.PlayerTransferListener;
 import pl.mikigal.bytesectors.client.redis.synchronization.PerformanceSyncListener;
 import pl.mikigal.bytesectors.client.redis.synchronization.PerformanceSyncRequestListener;
 import pl.mikigal.bytesectors.client.redis.synchronization.TimeSyncListener;
@@ -43,12 +44,13 @@ public class ByteSectorsClient extends JavaPlugin {
         commons = new ByteSectorsCommons(Configuration.getRedisHost(), Configuration.getRedisPort(), Configuration.getRedisPassword());
 
         Utils.log("Registering Redis listeners...");
-        RedisUtils.subscribe(Configuration.getSectorId(), new PacketConfigurationListener());
+        RedisUtils.subscribe(SectorManager.getCurrentSector(), new ConfigurationListener());
+        RedisUtils.subscribe(SectorManager.getCurrentSector(), new DatabaseQueryResponseListener());
+        RedisUtils.subscribe(SectorManager.getCurrentSector(), new PlayerTransferListener());
         RedisUtils.subscribe(SectorManager.getClientChannel(), new TimeSyncListener());
         RedisUtils.subscribe(SectorManager.getClientChannel(), new WeatherSyncListener());
-        RedisUtils.subscribe(SectorManager.getPublicChannel(), new PerformanceSyncListener());
         RedisUtils.subscribe(SectorManager.getClientChannel(), new PerformanceSyncRequestListener());
-        RedisUtils.subscribe(SectorManager.getCurrentSector(), new PacketPlayerTransferListener());
+        RedisUtils.subscribe(SectorManager.getPublicChannel(), new PerformanceSyncListener());
 
         Utils.log("Publishing request for sectors configuration...");
         new PacketConfigurationRequest().send(SectorManager.getSystemChannel());

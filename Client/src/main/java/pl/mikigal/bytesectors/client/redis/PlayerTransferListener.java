@@ -5,9 +5,9 @@ import pl.mikigal.bytesectors.commons.data.SectorManager;
 import pl.mikigal.bytesectors.commons.packet.PacketPlayerTransfer;
 import pl.mikigal.bytesectors.commons.redis.RedisListener;
 
-public class PacketPlayerTransferListener extends RedisListener<PacketPlayerTransfer> {
+public class PlayerTransferListener extends RedisListener<PacketPlayerTransfer> {
 
-    public PacketPlayerTransferListener() {
+    public PlayerTransferListener() {
         super(SectorManager.getCurrentSector(), PacketPlayerTransfer.class);
     }
 
