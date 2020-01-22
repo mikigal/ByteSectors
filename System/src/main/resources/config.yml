@@ -6,9 +6,9 @@ mysqlHost: "localhost"
 mysqlPort: 3306
 mysqlUsername: "root"
 mysqlPassword: ""
-mysqlDatabase: ""
+mysqlDatabase: "bytesectors"
 
-nearBorderTerrainModifyBlockDistance: 20 ## How near border modifying terrain should be disallowed
+nearBorderTerrainModifyBlockDistance: 20 # How near border modifying terrain should be disallowed
 
 joinSectorOfflineMessage: "&cYour sector is offline!" # Kick message for players that's trying to join, but are on offline sector
 outOfBorderMessage: "&cYou can't go outside map's border!" # Message when player is trying to go outside map's border

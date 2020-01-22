@@ -2,9 +2,11 @@ package pl.mikigal.bytesectors.commons.mysql;
 
 import com.zaxxer.hikari.HikariDataSource;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class DataSource {
 
@@ -41,25 +43,67 @@ public class DataSource {
         }
     }
 
-    public Connection getConnection() {
+    public void execute(StatementSerializable serializable) {
         try {
-            return this.dataSource.getConnection();
+            Connection connection = this.getConnection();
+            PreparedStatement statement = connection.prepareStatement(serializable.getSql());
+            for (Map.Entry<Integer, Object> replacement : serializable.getReplacements().entrySet()) {
+                statement.setObject(replacement.getKey(), replacement.getValue());
+            }
+
+            statement.executeUpdate();
+            statement.close();
+            connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void send(String sql, Object... variables) {
+    public ResultSetSerializable query(StatementSerializable serializable) {
         try {
-            Connection conn = getConnection();
-            PreparedStatement statement = conn.prepareStatement(sql);
-            for (int i = 0; i < variables.length; i++) {
-                statement.setObject(i + 1, variables[i].toString());
+            Connection connection = this.getConnection();
+            PreparedStatement statement = connection.prepareStatement(serializable.getSql());
+            for (Map.Entry<Integer, Object> replacement : serializable.getReplacements().entrySet()) {
+                statement.setObject(replacement.getKey(), replacement.getValue());
+            }
+            ResultSet resultSet = statement.executeQuery();
+            ResultSetMetaData metaData = resultSet.getMetaData();
+
+            Column[] columns = new Column[metaData.getColumnCount()];
+            for (int i = 0; i < metaData.getColumnCount(); i++) {
+                int sqlIndex = i + 1;
+                Column column = new Column(
+                        sqlIndex,
+                        metaData.getColumnName(sqlIndex),
+                        metaData.getColumnTypeName(sqlIndex),
+                        metaData.isAutoIncrement(sqlIndex),
+                        metaData.isNullable(sqlIndex) != ResultSetMetaData.columnNoNulls);
+
+                columns[i] = column;
             }
 
-            statement.executeUpdate();
+            List<Row> rows = new ArrayList<>();
+            while (resultSet.next()) {
+                Map<String, Object> row = new HashMap<>();
+                for (Column column : columns) {
+                    row.put(column.getName(), resultSet.getObject(column.getName()));
+                }
+
+                rows.add(new Row(row));
+            }
+
+            resultSet.close();
             statement.close();
-            conn.close();
+            connection.close();
+            return new ResultSetSerializable(columns, rows.toArray(new Row[0]));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Connection getConnection() {
+        try {
+            return this.dataSource.getConnection();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

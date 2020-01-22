@@ -46,7 +46,7 @@ public class ByteSectorsSystem extends Plugin {
                 SectorsConfiguration.getMysqlPort(),
                 SectorsConfiguration.getMysqlUsername(),
                 SectorsConfiguration.getMysqlPassword(),
-                SectorsConfiguration.getMysqlPassword());
+                SectorsConfiguration.getMysqlDatabase());
 
         Utils.log("Registering Redis listeners...");
         RedisUtils.subscribe(SectorManager.getSystemChannel(), new ConfigurationRequestListener());

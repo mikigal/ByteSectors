@@ -48,7 +48,7 @@ public class ByteSectorsClient extends JavaPlugin {
         RedisUtils.subscribe(SectorManager.getClientChannel(), new WeatherSyncListener());
         RedisUtils.subscribe(SectorManager.getPublicChannel(), new PerformanceSyncListener());
         RedisUtils.subscribe(SectorManager.getClientChannel(), new PerformanceSyncRequestListener());
-        RedisUtils.subscribe(SectorManager.getClientChannel(), new PacketPlayerTransferListener());
+        RedisUtils.subscribe(SectorManager.getCurrentSector(), new PacketPlayerTransferListener());
 
         Utils.log("Publishing request for sectors configuration...");
         new PacketConfigurationRequest().send(SectorManager.getSystemChannel());
