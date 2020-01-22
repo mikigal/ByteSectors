@@ -9,6 +9,7 @@ import pl.mikigal.bytesectors.commons.packet.synchronization.PacketPerformanceSy
 import pl.mikigal.bytesectors.commons.redis.RedisUtils;
 import pl.mikigal.bytesectors.system.configuration.ConfigurationManager;
 import pl.mikigal.bytesectors.system.configuration.SectorsConfiguration;
+import pl.mikigal.bytesectors.system.listener.ChatListener;
 import pl.mikigal.bytesectors.system.listener.PlayerLoginListener;
 import pl.mikigal.bytesectors.system.listener.ServerKickListener;
 import pl.mikigal.bytesectors.system.redis.*;
@@ -58,6 +59,7 @@ public class ByteSectorsSystem extends Plugin {
         Utils.log("Registering listeners...");
         this.getProxy().getPluginManager().registerListener(this, new PlayerLoginListener());
         this.getProxy().getPluginManager().registerListener(this, new ServerKickListener());
+        this.getProxy().getPluginManager().registerListener(this, new ChatListener());
 
         Utils.log("Registering synchronization tasks...");
         this.timeSynchronization = new ClientTimeSynchronization();

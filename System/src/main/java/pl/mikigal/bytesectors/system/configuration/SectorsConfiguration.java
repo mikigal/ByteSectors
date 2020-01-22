@@ -40,6 +40,8 @@ public class SectorsConfiguration {
     private static String nearBorderActionBar;
     private static String nearSectorActionBar;
 
+    private static String chatFormat;
+
     private static void load(Configuration config) {
         for (String key : config.getSection("sectors").getKeys()) {
             Configuration sectorSection = config.getSection("sectors." + key);
@@ -141,5 +143,9 @@ public class SectorsConfiguration {
 
     public static String getMysqlDatabase() {
         return mysqlDatabase;
+    }
+
+    public static String getChatFormat() {
+        return chatFormat;
     }
 }
