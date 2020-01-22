@@ -13,14 +13,23 @@ public class DatabaseAPI {
 
     private static Map<UUID, CompletableFuture<ResultSetSerializable>> waitingQueries = new HashMap<>();
 
-    public static UUID query(DatabaseStatement statement, Consumer<? super ResultSetSerializable> future) {
+    public static UUID query(DatabaseStatement statement, Consumer<ResultSetSerializable> complete, Consumer<QueryTimedOutException> timedOut, long time) {
         PacketDatabaseQuery packet = new PacketDatabaseQuery(statement, true);
         CompletableFuture<ResultSetSerializable> completableFuture = new CompletableFuture<>();
-        completableFuture.thenAccept(future);
+        completableFuture.thenAccept(complete);
+        completableFuture.exceptionally(exception -> {
+            timedOut.accept((QueryTimedOutException) exception);
+            return null;
+        });
 
         waitingQueries.put(packet.getUniqueId(), completableFuture);
         packet.send(SectorManager.getSystemChannel());
+        new Thread(new QueryTimedOutWatcher(time, packet.getUniqueId())).start();
         return packet.getUniqueId();
+    }
+
+    public static UUID query(DatabaseStatement statement, Consumer<ResultSetSerializable> complete, Consumer<QueryTimedOutException> timedOut) {
+        return query(statement, complete, timedOut, 5000);
     }
 
     public static void execute(DatabaseStatement statement) {

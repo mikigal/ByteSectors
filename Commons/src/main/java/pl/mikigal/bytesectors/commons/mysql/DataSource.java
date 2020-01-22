@@ -47,8 +47,9 @@ public class DataSource {
         try {
             Connection connection = this.getConnection();
             PreparedStatement statement = connection.prepareStatement(serializable.getSql());
+            boolean fixReplacements = serializable.getReplacements().get(0) != null;
             for (Map.Entry<Integer, Object> replacement : serializable.getReplacements().entrySet()) {
-                statement.setObject(replacement.getKey(), replacement.getValue());
+                statement.setObject(replacement.getKey() + (fixReplacements ? 1 : 0), replacement.getValue());
             }
 
             statement.executeUpdate();
