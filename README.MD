@@ -231,9 +231,8 @@ DatabasAPI.query(new DatabaseStatement("SELECT * FROM `my_table` WHERE kills > ?
       column.isNullable(); // Can value from this column be NULL?
   }
 }, exception -> {
-
-  // This code will be executed, when Client didn't get query response in selected time (default 5s)
-  System.out.println("Request timed out");
+  // This code will be executed, if statement throws exception or Client didn't get query response in selected time (default 5s)
+  System.out.println("Invalid query or request timed out");
   exception.printStactTrace();
 }));
 ```

@@ -1,5 +1,6 @@
 package pl.mikigal.bytesectors.commons.mysql;
 
+import java.sql.SQLException;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -24,8 +25,7 @@ public class QueryTimedOutWatcher implements Runnable {
         CompletableFuture<ResultSetSerializable> future = DatabaseAPI.getWaitingQueries().get(this.queryId);
         if (future != null) {
             DatabaseAPI.getWaitingQueries().remove(this.queryId);
-            future.completeExceptionally(new QueryTimedOutException("Query with UUID " + this.queryId + " didn't get response after 5000ms!"));
+            future.completeExceptionally(new SQLException("Query with UUID " + this.queryId + " didn't get response after 5000ms!"));
         }
-
     }
 }

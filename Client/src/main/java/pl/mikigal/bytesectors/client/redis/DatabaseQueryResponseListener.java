@@ -22,6 +22,11 @@ public class DatabaseQueryResponseListener extends RedisListener<PacketDatabaseQ
         }
 
         DatabaseAPI.getWaitingQueries().remove(packet.getUniqueId());
+        if (packet.getResultSet().getException() != null) {
+            future.completeExceptionally(packet.getResultSet().getException());
+            return;
+        }
+
         future.complete(packet.getResultSet());
     }
 }

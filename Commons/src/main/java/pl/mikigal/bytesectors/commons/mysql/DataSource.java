@@ -96,9 +96,10 @@ public class DataSource {
             resultSet.close();
             statement.close();
             connection.close();
-            return new ResultSetSerializable(columns, rows.toArray(new Row[0]));
+            return new ResultSetSerializable(columns, rows.toArray(new Row[0]), null);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return new ResultSetSerializable(null, null, e);
         }
     }
 

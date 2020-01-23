@@ -3,6 +3,7 @@ package pl.mikigal.bytesectors.commons.mysql;
 import pl.mikigal.bytesectors.commons.data.SectorManager;
 import pl.mikigal.bytesectors.commons.packet.database.PacketDatabaseQuery;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -13,23 +14,22 @@ public class DatabaseAPI {
 
     private static Map<UUID, CompletableFuture<ResultSetSerializable>> waitingQueries = new HashMap<>();
 
-    public static UUID query(DatabaseStatement statement, Consumer<ResultSetSerializable> complete, Consumer<QueryTimedOutException> timedOut, long time) {
+    public static UUID query(DatabaseStatement statement, Consumer<ResultSetSerializable> complete, Consumer<SQLException> exception, long timedOut) {
         PacketDatabaseQuery packet = new PacketDatabaseQuery(statement, true);
         CompletableFuture<ResultSetSerializable> completableFuture = new CompletableFuture<>();
         completableFuture.thenAccept(complete);
-        completableFuture.exceptionally(exception -> {
-            timedOut.accept((QueryTimedOutException) exception);
+        completableFuture.exceptionally(e -> {
+            exception.accept((SQLException) e);
             return null;
         });
-
         waitingQueries.put(packet.getUniqueId(), completableFuture);
         packet.send(SectorManager.getSystemChannel());
-        new Thread(new QueryTimedOutWatcher(time, packet.getUniqueId())).start();
+        new Thread(new QueryTimedOutWatcher(timedOut, packet.getUniqueId())).start();
         return packet.getUniqueId();
     }
 
-    public static UUID query(DatabaseStatement statement, Consumer<ResultSetSerializable> complete, Consumer<QueryTimedOutException> timedOut) {
-        return query(statement, complete, timedOut, 5000);
+    public static UUID query(DatabaseStatement statement, Consumer<ResultSetSerializable> complete, Consumer<SQLException> exception) {
+        return query(statement, complete, exception, 5000);
     }
 
     public static void execute(DatabaseStatement statement) {
