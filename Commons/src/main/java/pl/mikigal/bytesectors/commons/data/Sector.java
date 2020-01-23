@@ -75,7 +75,7 @@ public class Sector implements Serializable {
                 SectorManager.getSector(x, z - border, world)));
 
         for (Sector sector : sectors) {
-            if (!this.equals(sector) && sector.getMinimum().getWorld().equals(this.minimum.getWorld())) {
+            if (sector != null && !this.equals(sector) && sector.getMinimum().getWorld().equals(this.minimum.getWorld())) {
                 return sector;
             }
         }

@@ -8,7 +8,10 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.vehicle.VehicleMoveEvent;
+import pl.mikigal.bytesectors.client.data.User;
+import pl.mikigal.bytesectors.client.data.UserManager;
 import pl.mikigal.bytesectors.client.util.PlayerTransferUtils;
+import pl.mikigal.bytesectors.commons.data.SectorManager;
 
 public class SectorChangeListener implements Listener {
 
@@ -29,6 +32,12 @@ public class SectorChangeListener implements Listener {
 
         if (from.getBlockX() == to.getBlockX() && from.getBlockY() == to.getBlockY() && from.getBlockZ() == to.getBlockZ()) {
             return;
+        }
+
+        Player player = event.getPlayer();
+        if (!SectorManager.getCurrentSector().equals(SectorManager.getSector(to.getBlockX(), to.getBlockZ(), to.getWorld().getName()))) {
+            User user = UserManager.getUser(player.getUniqueId());
+            user.setLastLocation(from);
         }
 
         PlayerTransferUtils.handlePlayerMove(event.getPlayer(), to, event);

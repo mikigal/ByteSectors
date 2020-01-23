@@ -12,6 +12,8 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import pl.mikigal.bytesectors.client.ByteSectorsClient;
 import pl.mikigal.bytesectors.client.Configuration;
+import pl.mikigal.bytesectors.client.data.User;
+import pl.mikigal.bytesectors.client.data.UserManager;
 import pl.mikigal.bytesectors.client.event.SectorChangeEvent;
 import pl.mikigal.bytesectors.commons.data.Sector;
 import pl.mikigal.bytesectors.commons.data.SectorManager;
@@ -108,12 +110,19 @@ public class PlayerTransferUtils {
     }
 
     public static void handlePlayerMove(Player player, Location to, Event event) {
-        Location location = player.getLocation();
-        Sector currentSector = SectorManager.getSector(location.getBlockX(), location.getBlockZ(), location.getWorld().getName());
         Sector newSector = SectorManager.getSector(to.getBlockX(), to.getBlockZ(), to.getWorld().getName());
+        User user = UserManager.getUser(player.getUniqueId());
+
+        if (!SectorManager.getCurrentSector().equals(newSector)) {
+            player.teleport(user.getLastLocation());
+        }
+
+        if (user.getNextSectorChange() > System.currentTimeMillis()) {
+            return;
+        }
 
         if (newSector == null) {
-            player.teleport(location);
+            user.setNextSectorChange(System.currentTimeMillis() + 1000);
             Utils.sendMessage(player, Configuration.getOutOfBorderMessage());
 
             if (event instanceof Cancellable) {
@@ -123,12 +132,12 @@ public class PlayerTransferUtils {
             return;
         }
 
-        if (!currentSector.equals(newSector)) {
+        if (!SectorManager.getCurrentSector().equals(newSector)) {
+            user.setNextSectorChange(System.currentTimeMillis() + 1000);
+
             if (player.isInsideVehicle()) {
                 player.leaveVehicle();
             }
-
-            player.teleport(location);
 
             if (newSector.isOffline()) {
                 Utils.sendMessage(player, Configuration.getSectorOfflineMessage());
