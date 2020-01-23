@@ -8,21 +8,18 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.vehicle.VehicleMoveEvent;
-import pl.mikigal.bytesectors.client.data.User;
-import pl.mikigal.bytesectors.client.data.UserManager;
 import pl.mikigal.bytesectors.client.util.PlayerTransferUtils;
-import pl.mikigal.bytesectors.commons.data.SectorManager;
 
 public class SectorChangeListener implements Listener {
 
     @EventHandler
     public void onTeleport(PlayerTeleportEvent event) {
-        PlayerTransferUtils.handlePlayerMove(event.getPlayer(), event.getTo(), event);
+        PlayerTransferUtils.handlePlayerMove(event.getPlayer(), event.getFrom(), event.getTo(), event);
     }
 
     @EventHandler
     public void onPortal(PlayerPortalEvent event) {
-        PlayerTransferUtils.handlePlayerMove(event.getPlayer(), event.getTo(), event);
+        PlayerTransferUtils.handlePlayerMove(event.getPlayer(), event.getFrom(), event.getTo(), event);
     }
 
     @EventHandler
@@ -34,19 +31,13 @@ public class SectorChangeListener implements Listener {
             return;
         }
 
-        Player player = event.getPlayer();
-        if (!SectorManager.getCurrentSector().equals(SectorManager.getSector(to.getBlockX(), to.getBlockZ(), to.getWorld().getName()))) {
-            User user = UserManager.getUser(player.getUniqueId());
-            user.setLastLocation(from);
-        }
-
-        PlayerTransferUtils.handlePlayerMove(event.getPlayer(), to, event);
+        PlayerTransferUtils.handlePlayerMove(event.getPlayer(), from, to, event);
     }
 
     @EventHandler
     public void onVehicleMove(VehicleMoveEvent event) {
         if (event.getVehicle().getPassenger() instanceof Player) {
-            PlayerTransferUtils.handlePlayerMove(((Player) event.getVehicle().getPassenger()), event.getTo(), event);
+            PlayerTransferUtils.handlePlayerMove(((Player) event.getVehicle().getPassenger()), event.getFrom(), event.getTo(), event);
         }
     }
 }

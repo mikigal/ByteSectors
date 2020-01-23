@@ -10,6 +10,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import pl.mikigal.bytesectors.client.ByteSectorsClient;
 import pl.mikigal.bytesectors.client.Configuration;
 import pl.mikigal.bytesectors.client.data.User;
@@ -36,7 +37,6 @@ public class PlayerTransferUtils {
             return;
         }
 
-        Entity vehicle = player.getVehicle();
         Location location = to.clone();
         location.setY(location.getY() + 2);
 
@@ -109,43 +109,42 @@ public class PlayerTransferUtils {
         transferQueue.put(packet.getUniqueId(), future);
     }
 
-    public static void handlePlayerMove(Player player, Location to, Event event) {
+    public static void handlePlayerMove(Player player, Location from, Location to, Event event) {
+        Location location = player.getLocation();
+        Sector currentSector = SectorManager.getSector(location.getBlockX(), location.getBlockZ(), location.getWorld().getName());
         Sector newSector = SectorManager.getSector(to.getBlockX(), to.getBlockZ(), to.getWorld().getName());
         User user = UserManager.getUser(player.getUniqueId());
 
-        if (!SectorManager.getCurrentSector().equals(newSector)) {
-            player.teleport(user.getLastLocation());
+        if (currentSector != null && currentSector.equals(newSector)) {
+            return;
+        }
+
+        if (event instanceof Cancellable) { // VehicleMoveEvent isn't Cancellable
+            Cancellable cancellable = (Cancellable) event;
+            cancellable.setCancelled(true);
+        }
+
+        if (!(event instanceof PlayerTeleportEvent)) {
+            player.teleport(from);
         }
 
         if (user.getNextSectorChange() > System.currentTimeMillis()) {
             return;
         }
 
+        user.setNextSectorChange(System.currentTimeMillis() + 1000);
         if (newSector == null) {
-            user.setNextSectorChange(System.currentTimeMillis() + 1000);
             Utils.sendMessage(player, Configuration.getOutOfBorderMessage());
-
-            if (event instanceof Cancellable) {
-                Cancellable cancellable = (Cancellable) event;
-                cancellable.setCancelled(true);
-            }
             return;
         }
 
-        if (!SectorManager.getCurrentSector().equals(newSector)) {
-            user.setNextSectorChange(System.currentTimeMillis() + 1000);
-
-            if (player.isInsideVehicle()) {
-                player.leaveVehicle();
-            }
-
-            if (newSector.isOffline()) {
-                Utils.sendMessage(player, Configuration.getSectorOfflineMessage());
-                return;
-            }
-
-            PlayerTransferUtils.transfer(player, to, newSector);
+        if (newSector.isOffline()) {
+            Utils.sendMessage(player, Configuration.getSectorOfflineMessage());
+            return;
         }
+
+        player.leaveVehicle();
+        PlayerTransferUtils.transfer(player, to, newSector);
     }
 
     private static void connectToSector(Player player, Sector sector) {
