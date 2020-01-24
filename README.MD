@@ -271,8 +271,7 @@ If you want help in ByteSectors development feel free to create Pull Request! I 
 
 ## TODO
  - Make switch to last sector after join async
- - Transfer vehicle after change sector
  - Support for newer MC versions
 
 ## Known bugs
- - [Not confirmed] After few sector changes entities near border (both sides) clone infinity
+ - Seems currently everything work!

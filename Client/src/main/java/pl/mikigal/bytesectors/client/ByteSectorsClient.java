@@ -1,7 +1,10 @@
 package pl.mikigal.bytesectors.client;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.mikigal.bytesectors.client.command.SectorsCommand;
+import pl.mikigal.bytesectors.client.data.UserManager;
 import pl.mikigal.bytesectors.client.listener.*;
 import pl.mikigal.bytesectors.client.redis.ConfigurationListener;
 import pl.mikigal.bytesectors.client.redis.DatabaseQueryResponseListener;
@@ -86,6 +89,10 @@ public class ByteSectorsClient extends JavaPlugin {
 
         Utils.log("Registering commands...");
         RegisterUtils.register(new SectorsCommand());
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            UserManager.createUser(player.getUniqueId());
+        }
 
         Utils.log("Done!");
     }

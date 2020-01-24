@@ -5,14 +5,15 @@ import com.google.common.io.ByteStreams;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.entity.Boat;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import pl.mikigal.bytesectors.client.ByteSectorsClient;
 import pl.mikigal.bytesectors.client.Configuration;
+import pl.mikigal.bytesectors.client.data.Direction;
 import pl.mikigal.bytesectors.client.data.User;
 import pl.mikigal.bytesectors.client.data.UserManager;
 import pl.mikigal.bytesectors.client.event.SectorChangeEvent;
@@ -30,22 +31,19 @@ public class PlayerTransferUtils {
 
     private static Map<UUID, CompletableFuture<Player>> transferQueue = new HashMap<>();
 
-    public static void transfer(Player player, Location to, Sector sector) {
+    public static void transfer(Player player, Location to, Sector sector, Entity vehicle) {
         SectorChangeEvent event = new SectorChangeEvent(player, SectorManager.getCurrentSector(), sector);
         ByteSectorsClient.getInstance().getServer().getPluginManager().callEvent(event);
         if (event.isCancelled()) {
             return;
         }
 
-        Location location = to.clone();
-        location.setY(location.getY() + 2);
-
         PacketPlayerTransfer packet = new PacketPlayerTransfer(
                 player.getUniqueId(),
                 SerializationUtils.serializeItemstacks(player.getInventory().getContents()),
                 SerializationUtils.serializeItemstacks(player.getInventory().getArmorContents()),
                 SerializationUtils.serializeItemstacks(player.getEnderChest().getContents()),
-                SerializationUtils.serializeLocation(location),
+                SerializationUtils.serializeLocation(to),
                 SerializationUtils.serializePotionEffects(player.getActivePotionEffects()),
                 player.getLevel(),
                 player.getTotalExperience(),
@@ -55,8 +53,7 @@ public class PlayerTransferUtils {
                 player.isFlying(),
                 player.getAllowFlight(),
                 player.getGameMode().toString(),
-                null,
-                null);
+                vehicle != null);
 
         packet.send(sector);
         connectToSector(player, sector);
@@ -86,10 +83,11 @@ public class PlayerTransferUtils {
         player.setFlying(packet.isFly());
         player.setGameMode(GameMode.valueOf(packet.getGameMode()));
 
-        if (packet.hasVehicle()) {
-            Location vehicleLocation = SerializationUtils.deserializeLocation(packet.getVehicleLocation());
-            Entity vehicle = vehicleLocation.getWorld().spawnEntity(vehicleLocation, EntityType.fromName(packet.getVehicleType()));
-            vehicle.setPassenger(player);
+        if (packet.isInBoat()) {
+            Bukkit.getScheduler().runTaskLater(ByteSectorsClient.getInstance(), () -> {
+                Entity vehicle = player.getWorld().spawn(player.getLocation(), Boat.class);
+                vehicle.setPassenger(player);
+            }, 15);
         }
 
         transferQueue.remove(packet.getUniqueId());
@@ -143,8 +141,40 @@ public class PlayerTransferUtils {
             return;
         }
 
-        player.leaveVehicle();
-        PlayerTransferUtils.transfer(player, to, newSector);
+        Direction direction = getDirection(from, to);
+        Location transferLocation = direction.add(to);
+        Entity vehicle = player.getVehicle();
+
+        for (Entity entity : player.getWorld().getEntitiesByClasses(Boat.class)) { // Temporary workaround, getVehicle() some return null if player is in Boat
+            if (entity.getLocation().distance(player.getLocation()) <= 1) {
+                vehicle = entity;
+                break;
+            }
+        }
+
+        if (vehicle != null) {
+            player.leaveVehicle();
+            vehicle.remove();
+        }
+
+        PlayerTransferUtils.transfer(player, transferLocation, newSector, vehicle);
+    }
+
+    public static Direction getDirection(Location oldLocation, Location newLocation) {
+        if (newLocation.getBlockZ() < oldLocation.getBlockZ()) {
+            return Direction.NORTH;
+        }
+        if (newLocation.getBlockZ() > oldLocation.getBlockZ()) {
+            return Direction.SOUTH;
+        }
+        if (newLocation.getBlockX() < oldLocation.getBlockX()) {
+            return Direction.WEST;
+        }
+        if (newLocation.getBlockX() > oldLocation.getBlockX()) {
+            return Direction.EAST;
+        }
+
+        return Direction.UP_DOWN;
     }
 
     private static void connectToSector(Player player, Sector sector) {

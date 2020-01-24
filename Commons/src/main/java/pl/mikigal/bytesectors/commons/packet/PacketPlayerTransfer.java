@@ -21,10 +21,9 @@ public class PacketPlayerTransfer extends Packet {
     private boolean fly;
     private boolean allowFlight;
     private String gameMode;
-    private String vehicleType;
-    private LocationSerializable vehicleLocation;
+    private boolean inBoat;
 
-    public PacketPlayerTransfer( UUID uniqueId, String inventory, String armor, String enderChest, LocationSerializable location, PotionEffectSerializable[] potionEffects, int level, int exp, double health, int foodLevel, int fireTicks, boolean fly, boolean allowFlight, String gameMode, String vehicleType, LocationSerializable vehicleLocation) {
+    public PacketPlayerTransfer(UUID uniqueId, String inventory, String armor, String enderChest, LocationSerializable location, PotionEffectSerializable[] potionEffects, int level, int exp, double health, int foodLevel, int fireTicks, boolean fly, boolean allowFlight, String gameMode, boolean inBoat) {
         super();
         this.uniqueId = uniqueId;
         this.inventory = inventory;
@@ -40,8 +39,7 @@ public class PacketPlayerTransfer extends Packet {
         this.fly = fly;
         this.allowFlight = allowFlight;
         this.gameMode = gameMode;
-        this.vehicleType = vehicleType;
-        this.vehicleLocation = vehicleLocation;
+        this.inBoat = inBoat;
     }
 
 
@@ -101,15 +99,7 @@ public class PacketPlayerTransfer extends Packet {
         return gameMode;
     }
 
-    public boolean hasVehicle() {
-        return this.vehicleType != null;
-    }
-
-    public String getVehicleType() {
-        return vehicleType;
-    }
-
-    public LocationSerializable getVehicleLocation() {
-        return vehicleLocation;
+    public boolean isInBoat() {
+        return inBoat;
     }
 }

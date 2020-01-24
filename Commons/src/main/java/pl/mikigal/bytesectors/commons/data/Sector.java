@@ -46,10 +46,10 @@ public class Sector implements Serializable {
             return false;
         }
 
-        return x > minimum.getX() &&
-                z > minimum.getZ() &&
-                x <= maximum.getX() &&
-                z <= maximum.getZ();
+        return x >= minimum.getX() &&
+                z >= minimum.getZ() &&
+                x < maximum.getX() &&
+                z < maximum.getZ();
     }
 
     public int getDistanceToBorder(int x, int z) {
