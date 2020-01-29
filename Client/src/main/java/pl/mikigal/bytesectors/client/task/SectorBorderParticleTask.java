@@ -7,7 +7,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import pl.mikigal.bytesectors.client.ByteSectorsClient;
 import pl.mikigal.bytesectors.client.util.BlockUtils;
-import pl.mikigal.bytesectors.client.util.VersionUtils;
+import pl.mikigal.bytesectors.client.util.NMSUtils;
+import pl.mikigal.bytesectors.client.util.Utils;
 import pl.mikigal.bytesectors.commons.data.Sector;
 import pl.mikigal.bytesectors.commons.data.SectorManager;
 
@@ -49,30 +50,17 @@ public class SectorBorderParticleTask implements Runnable {
                 for (Location loc : entry.getValue()) {
                     final Player player = entry.getKey();
 
-                    if (VersionUtils.getVersion().startsWith("v1_13_")
-                            || VersionUtils.getVersion().startsWith("v1_14_")
-                            || VersionUtils.getVersion().startsWith("v1_15_")) {
+                    if (NMSUtils.getVersion().startsWith("v1_13_") || NMSUtils.getVersion().startsWith("v1_14_") || NMSUtils.getVersion().startsWith("v1_15_")) {
                         try {
-                            Object particleType = null;
-                            final Class<?> effectClass = Class.forName("org.bukkit.Particle");
-                            final Object[] effectTypes = effectClass.getEnumConstants();
-
-                            for (Object object : effectTypes) {
-                                if (object.toString().equals("PORTAL")) {
-                                    particleType = object;
-                                }
-                            }
-
-                            final Class<?> playerClass = Class.forName("org.bukkit.entity.Player");
-                            final Method playerSpawnParticleMethod = playerClass.getDeclaredMethod("spawnParticle", effectClass, Location.class, int.class);
-
-                            playerSpawnParticleMethod.invoke(player, particleType, loc, 1);
-                        } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                            e.printStackTrace();
+                            NMSUtils.getSpawnParticleMethod().invoke(player, NMSUtils.getParticle(), loc, 1);
+                        } catch (IllegalAccessException | InvocationTargetException e) {
+                            Utils.log(e);
                         }
-                    } else {
-                        player.playEffect(loc, Effect.PORTAL, 0);
+
+                        continue;
                     }
+
+                    player.playEffect(loc, Effect.PORTAL, 0);
                 }
             }
         });
