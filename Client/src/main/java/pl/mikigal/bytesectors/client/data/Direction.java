@@ -21,4 +21,21 @@ public enum Direction {
 
         return base;
     }
+
+    public static Direction fromLocation(Location from, Location to) {
+        if (to.getBlockZ() < from.getBlockZ()) {
+            return Direction.NORTH;
+        }
+        if (to.getBlockZ() > from.getBlockZ()) {
+            return Direction.SOUTH;
+        }
+        if (to.getBlockX() < from.getBlockX()) {
+            return Direction.WEST;
+        }
+        if (to.getBlockX() > from.getBlockX()) {
+            return Direction.EAST;
+        }
+
+        return Direction.UP_DOWN;
+    }
 }

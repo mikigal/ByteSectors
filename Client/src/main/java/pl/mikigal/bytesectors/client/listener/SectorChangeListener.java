@@ -14,12 +14,12 @@ public class SectorChangeListener implements Listener {
 
     @EventHandler
     public void onTeleport(PlayerTeleportEvent event) {
-        PlayerTransferUtils.handlePlayerMove(event.getPlayer(), event.getFrom(), event.getTo(), event);
+        PlayerTransferUtils.handlePlayerMove(event.getPlayer(), event.getFrom(), event.getTo(), false, event);
     }
 
     @EventHandler
     public void onPortal(PlayerPortalEvent event) {
-        PlayerTransferUtils.handlePlayerMove(event.getPlayer(), event.getFrom(), event.getTo(), event);
+        PlayerTransferUtils.handlePlayerMove(event.getPlayer(), event.getFrom(), event.getTo(), false, event);
     }
 
     @EventHandler
@@ -31,13 +31,13 @@ public class SectorChangeListener implements Listener {
             return;
         }
 
-        PlayerTransferUtils.handlePlayerMove(event.getPlayer(), from, to, event);
+        PlayerTransferUtils.handlePlayerMove(event.getPlayer(), from, to, true, event);
     }
 
     @EventHandler
     public void onVehicleMove(VehicleMoveEvent event) {
         if (event.getVehicle().getPassenger() instanceof Player) {
-            PlayerTransferUtils.handlePlayerMove(((Player) event.getVehicle().getPassenger()), event.getFrom(), event.getTo(), event);
+            PlayerTransferUtils.handlePlayerMove(((Player) event.getVehicle().getPassenger()), event.getFrom(), event.getTo(), true, event);
         }
     }
 }

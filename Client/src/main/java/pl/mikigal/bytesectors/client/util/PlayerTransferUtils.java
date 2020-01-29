@@ -31,7 +31,7 @@ public class PlayerTransferUtils {
 
     private static Map<UUID, CompletableFuture<Player>> transferQueue = new HashMap<>();
 
-    public static void transfer(Player player, Location to, Sector sector, Entity vehicle) {
+    private static void transfer(Player player, Location to, Sector sector, boolean inBoat) {
         SectorChangeEvent event = new SectorChangeEvent(player, SectorManager.getCurrentSector(), sector);
         ByteSectorsClient.getInstance().getServer().getPluginManager().callEvent(event);
         if (event.isCancelled()) {
@@ -53,7 +53,7 @@ public class PlayerTransferUtils {
                 player.isFlying(),
                 player.getAllowFlight(),
                 player.getGameMode().toString(),
-                vehicle != null);
+                inBoat);
 
         packet.send(sector);
         connectToSector(player, sector);
@@ -107,7 +107,7 @@ public class PlayerTransferUtils {
         transferQueue.put(packet.getUniqueId(), future);
     }
 
-    public static void handlePlayerMove(Player player, Location from, Location to, Event event) {
+    public static void handlePlayerMove(Player player, Location from, Location to, boolean naturalMove, Event event) {
         Location location = player.getLocation();
         Sector currentSector = SectorManager.getSector(location.getBlockX(), location.getBlockZ(), location.getWorld().getName());
         Sector newSector = SectorManager.getSector(to.getBlockX(), to.getBlockZ(), to.getWorld().getName());
@@ -141,14 +141,15 @@ public class PlayerTransferUtils {
             return;
         }
 
-        Direction direction = getDirection(from, to);
-        Location transferLocation = direction.add(to);
+        Location transferLocation = naturalMove ? Direction.fromLocation(from, to).add(to) : to;
         Entity vehicle = player.getVehicle();
 
-        for (Entity entity : player.getWorld().getEntitiesByClasses(Boat.class)) { // Temporary workaround, getVehicle() some return null if player is in Boat
-            if (entity.getLocation().distance(player.getLocation()) <= 1) {
-                vehicle = entity;
-                break;
+        if (vehicle == null) { // Temporary workaround, getVehicle() sometimes return null if player is in Boat
+            for (Entity entity : player.getLocation().getChunk().getEntities()) {
+                if (entity instanceof Boat && entity.getLocation().distance(player.getLocation()) <= 1) {
+                    vehicle = entity;
+                    break;
+                }
             }
         }
 
@@ -157,24 +158,7 @@ public class PlayerTransferUtils {
             vehicle.remove();
         }
 
-        PlayerTransferUtils.transfer(player, transferLocation, newSector, vehicle);
-    }
-
-    public static Direction getDirection(Location oldLocation, Location newLocation) {
-        if (newLocation.getBlockZ() < oldLocation.getBlockZ()) {
-            return Direction.NORTH;
-        }
-        if (newLocation.getBlockZ() > oldLocation.getBlockZ()) {
-            return Direction.SOUTH;
-        }
-        if (newLocation.getBlockX() < oldLocation.getBlockX()) {
-            return Direction.WEST;
-        }
-        if (newLocation.getBlockX() > oldLocation.getBlockX()) {
-            return Direction.EAST;
-        }
-
-        return Direction.UP_DOWN;
+        PlayerTransferUtils.transfer(player, transferLocation, newSector, vehicle != null);
     }
 
     private static void connectToSector(Player player, Sector sector) {

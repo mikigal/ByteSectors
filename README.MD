@@ -1,4 +1,4 @@
-# ByteSectors [MC 1.8 - 1.12]
+# ByteSectors [MC 1.8 - 1.15]
 Sectors system for Minecraft servers based on Redis
 
 Find whatever you want
