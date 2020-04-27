@@ -8,6 +8,7 @@ import pl.mikigal.bytesectors.client.data.UserManager;
 import pl.mikigal.bytesectors.client.listener.*;
 import pl.mikigal.bytesectors.client.redis.ConfigurationListener;
 import pl.mikigal.bytesectors.client.redis.DatabaseQueryResponseListener;
+import pl.mikigal.bytesectors.client.redis.PlayerInfoRequestListener;
 import pl.mikigal.bytesectors.client.redis.PlayerTransferListener;
 import pl.mikigal.bytesectors.client.redis.synchronization.PerformanceSyncListener;
 import pl.mikigal.bytesectors.client.redis.synchronization.PerformanceSyncRequestListener;
@@ -54,6 +55,7 @@ public class ByteSectorsClient extends JavaPlugin {
         RedisUtils.subscribe(SectorManager.getClientChannel(), new WeatherSyncListener());
         RedisUtils.subscribe(SectorManager.getClientChannel(), new PerformanceSyncRequestListener());
         RedisUtils.subscribe(SectorManager.getPublicChannel(), new PerformanceSyncListener());
+        RedisUtils.subscribe(SectorManager.getPublicChannel(), new PlayerInfoRequestListener());
 
         Utils.log("Publishing request for sectors configuration...");
         new PacketConfigurationRequest().send(SectorManager.getSystemChannel());

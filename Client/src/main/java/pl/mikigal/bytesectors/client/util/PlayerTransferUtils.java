@@ -41,7 +41,9 @@ public class PlayerTransferUtils {
         }
 
         PacketPlayerTransfer packet = new PacketPlayerTransfer(
+                player.getName(),
                 player.getUniqueId(),
+                SectorManager.getCurrentSectorId(),
                 SerializationUtils.serializeItemstacks(player.getInventory().getContents()),
                 SerializationUtils.serializeItemstacks(player.getInventory().getArmorContents()),
                 SerializationUtils.serializeItemstacks(player.getEnderChest().getContents()),

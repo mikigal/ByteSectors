@@ -40,11 +40,11 @@ tasks.withType(Jar) {
 }
 
 task deleteJar(type: Delete) {
-    delete '/Users/mikigal/Documents/Programowanie/Java/ByteSectors/Servers/First/plugins/Client-1.0.5-SNAPSHOT.jar'
-    delete '/Users/mikigal/Documents/Programowanie/Java/ByteSectors/Servers/Second/plugins/Client-1.0.5-SNAPSHOT.jar'
+    delete '/Users/mikigal/Documents/Programowanie/Java/ByteSectors/Servers/First/plugins/Client-1.0.6-SNAPSHOT.jar'
+    delete '/Users/mikigal/Documents/Programowanie/Java/ByteSectors/Servers/Second/plugins/Client-1.0.6-SNAPSHOT.jar'
 }
 
 task copyJar(type: Copy) {
-    from '/Users/mikigal/Documents/Programowanie/Java/ByteSectors/Servers/First/plugins/Client-1.0.5-SNAPSHOT-shadow.jar'
+    from '/Users/mikigal/Documents/Programowanie/Java/ByteSectors/Servers/First/plugins/Client-1.0.6-SNAPSHOT-shadow.jar'
     into "/Users/mikigal/Documents/Programowanie/Java/ByteSectors/Servers/Second/plugins"
 }
