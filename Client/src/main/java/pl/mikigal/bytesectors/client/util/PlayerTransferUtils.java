@@ -5,6 +5,7 @@ import com.google.common.io.ByteStreams;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Boat;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -72,7 +73,6 @@ public class PlayerTransferUtils {
         player.getInventory().setContents(SerializationUtils.deserializeItemstacks(packet.getInventory()));
         player.getInventory().setArmorContents(SerializationUtils.deserializeItemstacks(packet.getArmor()));
         player.getEnderChest().setContents(SerializationUtils.deserializeItemstacks(packet.getEnderChest()));
-        player.teleport(SerializationUtils.deserializeLocation(packet.getLocation()));
         player.setLevel(packet.getLevel());
         player.setTotalExperience(packet.getExp());
         player.setHealth(packet.getHealth());
@@ -81,6 +81,14 @@ public class PlayerTransferUtils {
         player.setAllowFlight(packet.isAllowFlight());
         player.setFlying(packet.isFly());
         player.setGameMode(GameMode.valueOf(packet.getGameMode()));
+
+        Location location = SerializationUtils.deserializeLocation(packet.getLocation());
+        int y = 255;
+        while (location.getWorld().getBlockAt(location.getBlockX(), y, location.getBlockZ()).getType() == Material.AIR) {
+            y--;
+        }
+        location.setY(y + 3);
+        player.teleport(location);
 
         if (packet.isInBoat()) {
             Bukkit.getScheduler().runTaskLater(ByteSectorsClient.getInstance(), () -> {
