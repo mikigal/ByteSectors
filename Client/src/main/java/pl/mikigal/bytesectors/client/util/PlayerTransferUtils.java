@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.potion.PotionEffect;
 import pl.mikigal.bytesectors.client.ByteSectorsClient;
 import pl.mikigal.bytesectors.client.Configuration;
 import pl.mikigal.bytesectors.client.data.Direction;
@@ -72,8 +73,6 @@ public class PlayerTransferUtils {
         player.getInventory().setArmorContents(SerializationUtils.deserializeItemstacks(packet.getArmor()));
         player.getEnderChest().setContents(SerializationUtils.deserializeItemstacks(packet.getEnderChest()));
         player.teleport(SerializationUtils.deserializeLocation(packet.getLocation()));
-        player.getActivePotionEffects().clear();
-        player.getActivePotionEffects().addAll(SerializationUtils.deserializePotionEffects(packet.getPotionEffects()));
         player.setLevel(packet.getLevel());
         player.setTotalExperience(packet.getExp());
         player.setHealth(packet.getHealth());
@@ -89,6 +88,16 @@ public class PlayerTransferUtils {
                 vehicle.setPassenger(player);
             }, 15);
         }
+
+        for (PotionEffect effect : player.getActivePotionEffects()) {
+            player.removePotionEffect(effect.getType());
+        }
+
+        Bukkit.getScheduler().runTaskLater(ByteSectorsClient.getInstance(), () -> {
+            for (PotionEffect effect : SerializationUtils.deserializePotionEffects(packet.getPotionEffects())) {
+                player.addPotionEffect(new PotionEffect(effect.getType(), effect.getAmplifier(), effect.getDuration()));
+            }
+        }, 20);
 
         transferQueue.remove(packet.getUniqueId());
         Bukkit.getScheduler().runTaskAsynchronously(ByteSectorsClient.getInstance(), () -> RedisUtils.set(player.getUniqueId().toString(), SectorManager.getCurrentSectorId()));
