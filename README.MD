@@ -1,6 +1,8 @@
 # ByteSectors [MC 1.8 - 1.15]
 Sectors system for Minecraft servers based on Redis
 
+## Project is no longer supported, please don't DM me for support or fix
+
 Find whatever you want
  - [Requirements](#requirements)
  - [Plugins compatibility](#plugins-compatibility)
